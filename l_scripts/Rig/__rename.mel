@@ -1,0 +1,82 @@
+global proc string[] getAllJointsInHierarchy(string $rootNode) {
+    // 获取层级中的所有关节
+    string $allNodes[] = `listRelatives -ad -fullPath $rootNode`;
+    string $result[] = {};
+    
+    // 检查根节点是否为关节
+    if (`nodeType $rootNode` == "joint") {
+        $result[size($result)] = $rootNode;
+    }
+    
+    // 添加所有子关节
+    for ($node in $allNodes) {
+        if (`nodeType $node` == "joint") {
+            $result[size($result)] = $node;
+        }
+    }
+    
+    return $result;
+}
+
+global proc string getShortName(string $longName) {
+    // 从长名称中提取短名称（最后一个|之后的部分）
+    string $buffer[];
+    tokenize($longName, "|", $buffer);
+    return $buffer[size($buffer)-1];
+}
+
+global proc renameBonesToNamespace() {
+    // 获取选中的根节点
+    string $selected[] = `ls -sl -long`;
+
+    if (size($selected) == 0) {
+        warning "请先选择骨骼层级中的根节点";
+        return;
+    }
+
+    // 处理每个选中的根节点及其层级
+    for ($root in $selected) {
+        // 获取层级中的所有关节
+        string $allJoints[] = getAllJointsInHierarchy($root);
+        
+        // 处理每个关节
+        for ($joint in $allJoints) {
+            string $shortName = getShortName($joint);
+            
+            // 检查名称中是否包含下划线
+            if (`gmatch $shortName "*_*"`) {
+                string $buffer[];
+                int $splitCount = `tokenize $shortName "_" $buffer`;
+                
+                if ($splitCount > 1) {
+                    string $namespace = $buffer[0];
+                    string $newName = $namespace + ":";
+                    
+                    // 构建新名称（去掉第一个下划线，后续下划线保留）
+                    for ($i = 1; $i < $splitCount; $i++) {
+                        $newName += $buffer[$i];
+                        if ($i < $splitCount - 1) {
+                            $newName += "_";
+                        }
+                    }
+                    
+                    if ($newName != $shortName) {
+                        // 检查是否已存在同名节点
+                        string $existingNodes[] = `ls $newName`;
+                        if (size($existingNodes) > 0) {
+                            warning ("无法重命名 " + $shortName + " -> " + $newName + "，名称已存在");
+                        } else {
+                            // 使用eval命令执行重命名
+                            eval("rename \"" + $joint + "\" \"" + $newName + "\"");
+                            print ("重命名: " + $shortName + " -> " + $newName + "\n");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    print "骨骼重命名完成!\n";
+}
+
+renameBonesToNamespace();

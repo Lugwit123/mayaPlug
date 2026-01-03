@@ -1,0 +1,282 @@
+[
+    {
+        "name": "MASTER", 
+        "expanded": true, 
+        "description": "资产大组", 
+        "condition": [], 
+        "subs": [
+            {
+                "description": "模型高模组", 
+                "expanded": true, 
+                "subs": [
+                    {
+                        "expanded": true, 
+                        "subs": [
+                            {
+                                "expanded": false, 
+                                "description": "身体组", 
+                                "condition": [], 
+                                "name": "BODY_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "口腔组", 
+                                "condition": [], 
+                                "name": "OralCavity_GRP"
+                            }, 
+                            {
+                                "expanded": true, 
+                                "subs": [
+                                    {
+                                        "expanded": false, 
+                                        "description": "眼球组", 
+                                        "condition": [], 
+                                        "name": "eyeBall_grp"
+                                    }, 
+                                    {
+                                        "expanded": false, 
+                                        "description": "睫毛组", 
+                                        "condition": [], 
+                                        "name": "eyeLash_grp"
+                                    }, 
+                                    {
+                                        "expanded": false, 
+                                        "description": "玻璃体", 
+                                        "condition": [], 
+                                        "name": "eyeGlasses_grp"
+                                    }
+                                ], 
+                                "description": "眼睛组", 
+                                "condition": [], 
+                                "name": "Eye_GRP"
+                            }
+                        ], 
+                        "name": "GEO_GRP", 
+                        "condition": [], 
+                        "description": "资产的模型几何形物体组"
+                    }, 
+                    {
+                        "expanded": false, 
+                        "name": "RIG_GRP", 
+                        "condition": [], 
+                        "description": "资产绑定控制器组"
+                    }, 
+                    {
+                        "expanded": true, 
+                        "subs": [
+                            {
+                                "expanded": false, 
+                                "description": "上衣组", 
+                                "condition": [], 
+                                "name": "UpperGarment_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "下装组", 
+                                "condition": [], 
+                                "name": "LowerGarment_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "鞋子组", 
+                                "condition": [], 
+                                "name": "SHOES_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "饰品组", 
+                                "condition": [], 
+                                "name": "Ornaments_GRP"
+                            }
+                        ], 
+                        "name": "CLOTH_GRP", 
+                        "condition": [], 
+                        "description": "资产布料模型组"
+                    }, 
+                    {
+                        "expanded": true, 
+                        "subs": [
+                            {
+                                "expanded": false, 
+                                "description": "毛发模型", 
+                                "condition": [], 
+                                "name": "HAIR_GEO"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "毛发Groom", 
+                                "condition": [], 
+                                "name": "HAIR_GROOM"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "毛发描述文件组", 
+                                "condition": [], 
+                                "name": "HAIR_DESCRIPTIONS"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "毛发交互模式式的组", 
+                                "condition": [], 
+                                "name": "HAIR_INTERACTIVE"
+                            }
+                        ], 
+                        "name": "HAIR_GRP", 
+                        "condition": [], 
+                        "description": "资产毛发组"
+                    }, 
+                    {
+                        "expanded": false, 
+                        "description": "表情变形目标模型组", 
+                        "condition": [], 
+                        "name": "FACE_BLEND_GRP"
+                    }, 
+                    {
+                        "expanded": false, 
+                        "name": "OTHER_GRP", 
+                        "condition": [], 
+                        "description": "资产的其他一些物体"
+                    }
+                ], 
+                "condition": [], 
+                "name": "{asset}_H_GRP"
+            }, 
+            {
+                "name": "{asset}_L_GRP", 
+                "expanded": false, 
+                "subs": [
+                    {
+                        "name": "GEO_GRP", 
+                        "expanded": true, 
+                        "description": "资产的模型几何形物体组", 
+                        "condition": [], 
+                        "subs": [
+                            {
+                                "expanded": false, 
+                                "description": "身体组", 
+                                "condition": [], 
+                                "name": "BODY_LOW_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "口腔组", 
+                                "condition": [], 
+                                "name": "OralCavity_LOW_GRP"
+                            }, 
+                            {
+                                "expanded": true, 
+                                "subs": [
+                                    {
+                                        "expanded": false, 
+                                        "description": "眼球组", 
+                                        "condition": [], 
+                                        "name": "eyeBall_LOW_grp"
+                                    }, 
+                                    {
+                                        "expanded": false, 
+                                        "description": "睫毛组", 
+                                        "condition": [], 
+                                        "name": "eyeLash_LOW_grp"
+                                    }, 
+                                    {
+                                        "expanded": false, 
+                                        "description": "玻璃体", 
+                                        "condition": [], 
+                                        "name": "eyeGlasses_LOW_grp"
+                                    }
+                                ], 
+                                "name": "Eye_LOW_GRP", 
+                                "condition": [], 
+                                "description": "眼睛组"
+                            }
+                        ]
+                    }, 
+                    {
+                        "expanded": false, 
+                        "name": "RIG_LOW_GRP", 
+                        "condition": [], 
+                        "description": "资产绑定控制器组"
+                    }, 
+                    {
+                        "expanded": true, 
+                        "subs": [
+                            {
+                                "expanded": false, 
+                                "description": "上衣组", 
+                                "condition": [], 
+                                "name": "UpperGarment_LOW_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "下装组", 
+                                "condition": [], 
+                                "name": "LowerGarment_LOW_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "鞋子组", 
+                                "condition": [], 
+                                "name": "SHOES_LOW_GRP"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "饰品组", 
+                                "condition": [], 
+                                "name": "Ornaments_LOW_GRP"
+                            }
+                        ], 
+                        "description": "资产布料模型组", 
+                        "condition": [], 
+                        "name": "CLOTH_LOW_GRP"
+                    }, 
+                    {
+                        "expanded": true, 
+                        "subs": [
+                            {
+                                "expanded": false, 
+                                "description": "毛发模型", 
+                                "condition": [], 
+                                "name": "HAIR_LOW_GEO"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "毛发Groom", 
+                                "condition": [], 
+                                "name": "HAIR_LOW_GROOM"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "毛发描述文件组", 
+                                "condition": [], 
+                                "name": "HAIR_LOW_DESCRIPTIONS"
+                            }, 
+                            {
+                                "expanded": false, 
+                                "description": "毛发交互模式式的组", 
+                                "condition": [], 
+                                "name": "HAIR_LOW_INTERACTIVE"
+                            }
+                        ], 
+                        "description": "资产毛发组", 
+                        "condition": [], 
+                        "name": "HAIR_LOW_GRP"
+                    }, 
+                    {
+                        "expanded": false, 
+                        "description": "表情变形目标模型组", 
+                        "condition": [], 
+                        "name": "FACE_BLEND_LOW_GRP"
+                    }, 
+                    {
+                        "expanded": false, 
+                        "name": "OTHER_LOW_GRP", 
+                        "condition": [], 
+                        "description": "资产的其他一些物体"
+                    }
+                ], 
+                "condition": [], 
+                "description": "模型低模组"
+            }
+        ]
+    }
+]

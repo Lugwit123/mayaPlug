@@ -1,0 +1,1 @@
+Z:\Python\Python37\pythonw.exe -u Z:\plug_in\Lugwit_plug\mayaPlug\Lugwit_MayaStartScripts\startCodeEncryptionUI.py

@@ -1,0 +1,86 @@
+# 忽略FBX文件
+*.fbx
+*.FBX
+
+# 忽略大于10M的文件
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.exe
+*.dll
+*.so
+*.dylib
+*.ma
+*.mb
+*.obj
+*.pdb
+
+# 忽略library文件夹
+*_library/
+
+# 忽略大文件夹
+materialPlug/
+ThridLib/
+ThridPlug/
+MayaMenu/
+Lugwit_fileCheck/
+Lugwit_fileCheck_old/
+MatConfigServer/
+PackPlug/
+tempTask/
+
+# 忽略IDE配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 忽略Python缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# 忽略Maya临时文件
+*.temp
+*.tmp
+mayaLog.txt
+*.mel.bak
+
+# 忽略日志文件
+*.log
+D:/file.log
+
+# 忽略系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 忽略聊天记录
+.chat/
+
+
+# 保留核心脚本文件
+!l_scripts/
+!load_pymel.py
+!__ini__.py
+!icons/
+!MayaModuel/
+!plug-ins/
+!scripts/
+!mov_help/
+!Lib/
+!Lugwit_MayaStartScripts/
+!Lugwit_fileCheck/

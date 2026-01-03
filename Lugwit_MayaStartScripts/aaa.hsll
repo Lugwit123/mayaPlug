@@ -1,0 +1,1092 @@
+code_context ["    lprint ('ss_menu_path : ' ,ss_menu_path)\n"]
+    "ss_menu_path : ", 
+    "D:/TD_Depot/plug_in/Lugwit_plug/mayaPlug/MayaMenu/menuDir"
+   2023-12-19 02:44:31----code_context : lprint ('ss_menu_path : ' ,ss_menu_path) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:50, ,-fn: _UpdateMainMenu
+code_context ['    cmds.menu(menuDirBaseName, e=1, deleteAllItems=1)\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_"
+   2023-12-19 02:44:31----code_context : cmds.menu(menuDirBaseName, e=1, deleteAllItems=1) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:104, ,-fn: createMenuItemInDir
+code_context ['            configDict=json.load(f)\n']
+    {
+        "A": {
+            "name": "A_sidePlug", 
+            "toolTip": {
+                "A_侧边栏插件--B对称传递位置.py": "把第一个物体的所有顶点的x的坐标传递给第二个物体"
+            }, 
+            "label": "侧边栏插件"
+        }, 
+        "C": {
+            "name": "C_modelReplace", 
+            "label": "模型替换"
+        }, 
+        "B": {
+            "name": "B_IO", 
+            "label": "导入导出"
+        }, 
+        "E": {
+            "name": "E_prejectRule", 
+            "label": "项目规范"
+        }, 
+        "D": {
+            "name": "D_cleanFile", 
+            "label": "清理文件"
+        }
+    }
+   2023-12-19 02:44:31----code_context : configDict=json.load(f) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:112, ,-fn: createMenuItemInDir
+code_context ['            \n']
+    [
+        "A_侧边栏插件--A加载侧边栏插件.py", 
+        "A_侧边栏插件--B对称传递位置.py", 
+        "B导入导出--A导出obj序列以节点名.py", 
+        "B导入导出--B导出引用修改.py", 
+        "B导入导出--C导入引用修改_不包含材质.py", 
+        "B导入导出--D工程打包.py", 
+        "B导入导出--E导出选择物体材质Json文件.py", 
+        "B导入导出--F导出选择物体材质Json文件(临时目录).py", 
+        "B导入导出--G导出所有的ShadingGroup网络.py", 
+        "B导入导出--H导出所有的ShadingGroup网络(临时目录).py", 
+        "config.json", 
+        "C模型替换--A替换高低模.py", 
+        "D清理文件--A清除未知插件.py", 
+        "D清理文件--B清除未知节点.py", 
+        "D清理文件--C清理材质修改.py", 
+        "D清理文件--D删除多余的shape节点.py", 
+        "E项目规范--A大纲视图命名.py", 
+        "F--新建文件夹"
+    ]
+   2023-12-19 02:44:31----code_context :  
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:115, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {
+        "A_侧边栏插件--B对称传递位置.py": "把第一个物体的所有顶点的x的坐标传递给第二个物体"
+    }
+   2023-12-19 02:44:31----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_A_sidePlug"
+   2023-12-19 02:44:31----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:31----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏侧边栏插件"
+   2023-12-19 02:44:31----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "A_侧边栏插件--A加载侧边栏插件", 
+    ".py"
+   2023-12-19 02:44:31----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:31----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "A_侧边栏插件--A加载侧边栏插件"
+   2023-12-19 02:44:31----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {
+        "A_侧边栏插件--B对称传递位置.py": "把第一个物体的所有顶点的x的坐标传递给第二个物体"
+    }
+   2023-12-19 02:44:31----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_A_sidePlug"
+   2023-12-19 02:44:31----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:31----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏侧边栏插件"
+   2023-12-19 02:44:31----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "A_侧边栏插件--B对称传递位置", 
+    ".py"
+   2023-12-19 02:44:31----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:31----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "A_侧边栏插件--B对称传递位置"
+   2023-12-19 02:44:31----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:31----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:31----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:31----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:31----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--A导出obj序列以节点名", 
+    ".py"
+   2023-12-19 02:44:31----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:31----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--A导出obj序列以节点名"
+   2023-12-19 02:44:31----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:31----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:31----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:31----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:31----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--B导出引用修改", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--B导出引用修改"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--C导入引用修改_不包含材质", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--C导入引用修改_不包含材质"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--D工程打包", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--D工程打包"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--E导出选择物体材质Json文件", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--E导出选择物体材质Json文件"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--F导出选择物体材质Json文件(临时目录)", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--F导出选择物体材质Json文件(临时目录)"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--G导出所有的ShadingGroup网络", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--G导出所有的ShadingGroup网络"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--H导出所有的ShadingGroup网络(临时目录)", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--H导出所有的ShadingGroup网络(临时目录)"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "config", 
+    ".json"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_C_modelReplace"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏模型替换"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "C模型替换--A替换高低模", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "C模型替换--A替换高低模"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--A清除未知插件", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--A清除未知插件"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--B清除未知节点", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--B清除未知节点"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--C清理材质修改", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--C清理材质修改"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--D删除多余的shape节点", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--D删除多余的shape节点"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_E_prejectRule"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏项目规范"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "E项目规范--A大纲视图命名", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "E项目规范--A大纲视图命名"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['    cmds.menu(menuDirBaseName, e=1, deleteAllItems=1)\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹"
+   2023-12-19 02:44:32----code_context : cmds.menu(menuDirBaseName, e=1, deleteAllItems=1) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:104, ,-fn: createMenuItemInDir
+code_context ['            configDict=json.load(f)\n']
+    {
+        "A": {
+            "name": "A_sidePlug", 
+            "toolTip": {
+                "A_侧边栏插件--B对称传递位置.py": "把第一个物体的所有顶点的x的坐标传递给第二个物体"
+            }, 
+            "label": "侧边栏插件"
+        }, 
+        "C": {
+            "name": "C_modelReplace", 
+            "label": "模型替换"
+        }, 
+        "B": {
+            "name": "B_IO", 
+            "label": "导入导出"
+        }, 
+        "E": {
+            "name": "E_prejectRule", 
+            "label": "项目规范"
+        }, 
+        "D": {
+            "name": "D_cleanFile", 
+            "label": "name清理文件"
+        }
+    }
+   2023-12-19 02:44:32----code_context : configDict=json.load(f) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:112, ,-fn: createMenuItemInDir
+code_context ['            \n']
+    [
+        "A_侧边栏插件--A加载侧边栏插件.py", 
+        "A_侧边栏插件--B对称传递位置.py", 
+        "B导入导出--A导出obj序列以节点名.py", 
+        "B导入导出--B导出引用修改.py", 
+        "B导入导出--C导入引用修改_不包含材质.py", 
+        "B导入导出--D工程打包.py", 
+        "B导入导出--E导出选择物体材质Json文件.py", 
+        "B导入导出--F导出选择物体材质Json文件(临时目录).py", 
+        "B导入导出--G导出所有的ShadingGroup网络.py", 
+        "B导入导出--H导出所有的ShadingGroup网络(临时目录).py", 
+        "config.json", 
+        "C模型替换--A替换高低模.py", 
+        "D清理文件--A清除未知插件.py", 
+        "D清理文件--B清除未知节点.py", 
+        "D清理文件--C清理材质修改.py", 
+        "D清理文件--D删除多余的shape节点.py", 
+        "E项目规范--A大纲视图命名.py"
+    ]
+   2023-12-19 02:44:32----code_context :  
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:115, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {
+        "A_侧边栏插件--B对称传递位置.py": "把第一个物体的所有顶点的x的坐标传递给第二个物体"
+    }
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹A_sidePlug"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏侧边栏插件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "A_侧边栏插件--A加载侧边栏插件", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "A_侧边栏插件--A加载侧边栏插件"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {
+        "A_侧边栏插件--B对称传递位置.py": "把第一个物体的所有顶点的x的坐标传递给第二个物体"
+    }
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹A_sidePlug"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏侧边栏插件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "A_侧边栏插件--B对称传递位置", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "A_侧边栏插件--B对称传递位置"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--A导出obj序列以节点名", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--A导出obj序列以节点名"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--B导出引用修改", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--B导出引用修改"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--C导入引用修改_不包含材质", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--C导入引用修改_不包含材质"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--D工程打包", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--D工程打包"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--E导出选择物体材质Json文件", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--E导出选择物体材质Json文件"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--F导出选择物体材质Json文件(临时目录)", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--F导出选择物体材质Json文件(临时目录)"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--G导出所有的ShadingGroup网络", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--G导出所有的ShadingGroup网络"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹B_IO"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏导入导出"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "B导入导出--H导出所有的ShadingGroup网络(临时目录)", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "B导入导出--H导出所有的ShadingGroup网络(临时目录)"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "config", 
+    ".json"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹C_modelReplace"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏模型替换"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "C模型替换--A替换高低模", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "C模型替换--A替换高低模"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏name清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--A清除未知插件", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--A清除未知插件"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏name清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--B清除未知节点", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--B清除未知节点"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏name清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--C清理材质修改", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--C清理材质修改"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹D_cleanFile"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏name清理文件"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "D清理文件--D删除多余的shape节点", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "D清理文件--D删除多余的shape节点"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir
+code_context ['                toolTipDict= getValue.get("toolTip",{})\n']
+    {}
+   2023-12-19 02:44:32----code_context : toolTipDict= getValue.get("toolTip",{}) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:123, ,-fn: createMenuItemInDir
+code_context ['                name=getValue["name"]\n']
+    "MayaWindow|SSMenu_New|通用_____________Common_|新建文件夹E_prejectRule"
+   2023-12-19 02:44:32----code_context : name=getValue["name"] 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:125, ,-fn: createMenuItemInDir
+code_context ['                lprint (cmds.menuItem(name,q=1,ex=1,divider=True,))\n']
+    false
+   2023-12-19 02:44:32----code_context : lprint (cmds.menuItem(name,q=1,ex=1,divider=True,)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:127, ,-fn: createMenuItemInDir
+code_context ["                    lprint (u'\xe5\x88\x9b\xe5\xbb\xba\xe5\x88\x86\xe5\x89\xb2\xe6\xa0\x8f{}'.format(dividerLabel))\n"]
+    "创建分割栏项目规范"
+   2023-12-19 02:44:32----code_context : lprint (u'创建分割栏{}'.format(dividerLabel)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:129, ,-fn: createMenuItemInDir
+code_context ['                lprint (_fsn, _ext)\n']
+    "E项目规范--A大纲视图命名", 
+    ".py"
+   2023-12-19 02:44:32----code_context : lprint (_fsn, _ext) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:135, ,-fn: createMenuItemInDir
+code_context ['                lprint (menuItemDict,bool(menuItemDict))\n']
+    null, 
+    false
+   2023-12-19 02:44:32----code_context : lprint (menuItemDict,bool(menuItemDict)) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:139, ,-fn: createMenuItemInDir
+code_context ['                    lprint (label)\n']
+    "E项目规范--A大纲视图命名"
+   2023-12-19 02:44:32----code_context : lprint (label) 
+File: D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug\MayaMenu\createMenu.py:145, ,-fn: createMenuItemInDir

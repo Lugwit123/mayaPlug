@@ -1,0 +1,259 @@
+[
+  { "name": "Group", 
+    "label": "资产总组",
+    "children": [
+      { "name": "Geometry",
+        "label": "模型组", 
+        "children": [
+          {
+            "label": "高模", 
+            "children": [
+              {
+                "label": "脸部组", 
+                "children": [
+                  {
+                    "label": "毛发", 
+                    "children": [
+                      {
+                        "label": "头发", 
+                        "children": [], 
+                        "name": "hair"
+                      }, 
+                      {
+                        "label": "睫毛", 
+                        "children": [], 
+                        "name": "eyelash"
+                      }, 
+                      {
+                        "label": "眉毛", 
+                        "children": [], 
+                        "name": "brow"
+                      }
+                    ], 
+                    "name": "nchair"
+                  }, 
+                  {
+                    "label": "眼睛", 
+                    "children": [
+                      {
+                        "children": [], 
+                        "name": "eyeBallOut", 
+                        "label": "外眼球"
+                      }, 
+                      {
+                        "children": [], 
+                        "name": "eyeBallIn", 
+                        "label": "内眼球"
+                      }, 
+                      {
+                        "children": [], 
+                        "name": "eyeBallGrain", 
+                        "label": "瞳孔"
+                      }, 
+                      {
+                        "children": [], 
+                        "name": "canthus", 
+                        "label": "眼角"
+                      }, 
+                      {
+                        "children": [], 
+                        "name": "eyeHighLigth", 
+                        "label": "高光点"
+                      }
+                    ], 
+                    "name": "eyeBall"
+                  }, 
+                  {
+                    "label": "口腔", 
+                    "children": [
+                      {
+                        "label": "上口腔", 
+                        "children": [
+                          {
+                            "label": "上牙龈", 
+                            "children": [], 
+                            "name": "teethUpperOn"
+                          }, 
+                          {
+                            "label": "上牙齿", 
+                            "children": [], 
+                            "name": "teethUpperIn"
+                          }
+                        ], 
+                        "name": "teethUpper"
+                      }, 
+                      {
+                        "label": "下口腔", 
+                        "children": [
+                          {
+                            "label": "下牙龈", 
+                            "children": [], 
+                            "name": "teethLowerOn"
+                          }, 
+                          {
+                            "label": "下牙齿", 
+                            "children": [], 
+                            "name": "teethLowerIn"
+                          }
+                        ], 
+                        "name": "teethLower"
+                      }, 
+                      {
+                        "label": "舌头", 
+                        "children": [], 
+                        "name": "tongue"
+                      }
+                    ], 
+                    "name": "mouth"
+                  }
+                ], 
+                "name": "face"
+              }, 
+              {
+                "label": "身体组", 
+                "children": [
+                  {
+                    "label": "衣服", 
+                    "children": [], 
+                    "name": "cloth"
+                  }, 
+                  {
+                    "label": "鞋", 
+                    "children": [], 
+                    "name": "shoes"
+                  }, 
+                  {
+                    "label": "手", 
+                    "children": [], 
+                    "name": "hand"
+                  }, 
+                  {
+                    "label": "指甲", 
+                    "children": [], 
+                    "name": "nail"
+                  }, 
+                  {
+                    "label": "头", 
+                    "children": [], 
+                    "name": "head"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "pants", 
+                    "label": "裤子"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "skirt", 
+                    "label": "裙子"
+                  }
+                ], 
+                "name": "ncbody"
+              }, 
+              {
+                "label": "装备", 
+                "children": [
+                  {
+                    "label": "盔甲", 
+                    "children": [], 
+                    "name": "armor"
+                  }, 
+                  {
+                    "label": "护腕", 
+                    "children": [], 
+                    "name": "cuff"
+                  }, 
+                  {
+                    "label": "腰带", 
+                    "children": [], 
+                    "name": "belt"
+                  }, 
+                  {
+                    "label": "护膝", 
+                    "children": [], 
+                    "name": "kneecap"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "hairClasp", 
+                    "label": "发簪"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "hood", 
+                    "label": "头巾"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "headband", 
+                    "label": "头饰带"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "hairpin", 
+                    "label": "发夹"
+                  }, 
+                  {
+                    "label": "头盔", 
+                    "children": [], 
+                    "name": "helmet"
+                  }, 
+                  {
+                    "label": "翅膀", 
+                    "children": [], 
+                    "name": "Wings"
+                  }
+                ], 
+                "name": "wear"
+              }, 
+              {
+                "label": "道具", 
+                "children": [
+                  {
+                    "label": "刀", 
+                    "children": [], 
+                    "name": "knife"
+                  }, 
+                  {
+                    "label": "剑", 
+                    "children": [], 
+                    "name": "sword"
+                  }, 
+                  {
+                    "label": "枪", 
+                    "children": [], 
+                    "name": "gun"
+                  }, 
+                  {
+                    "label": "包", 
+                    "children": [], 
+                    "name": "bag"
+                  }, 
+                  {
+                    "label": "手表", 
+                    "children": [], 
+                    "name": "watch"
+                  }, 
+                  {
+                    "label": "手机", 
+                    "children": [], 
+                    "name": "phone"
+                  }, 
+                  {
+                    "children": [], 
+                    "name": "cloak", 
+                    "label": "披风"
+                  }
+                ], 
+                "name": "prop"
+              }
+            ], 
+            "name": "higNUL"
+          }
+        ] 
+        
+      }
+    ] 
+
+  }
+]

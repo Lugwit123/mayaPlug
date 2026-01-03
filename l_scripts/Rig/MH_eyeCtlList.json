@@ -1,0 +1,15 @@
+['locatorCTL_FACIAL_L_Eye',          '眼球控制器',
+ 'locatorCTL_FACIAL_L_EyesackUpper',         '上眼皮控制器_A',
+ 
+ 'locatorCTL_FACIAL_L_EyelidUpperFurrow',    '上眼皮控制器_B',
+ 
+ 'locatorCTL_FACIAL_L_EyelidUpperB',         '上眼皮控制器_C',
+ 
+ 'locatorCTL_FACIAL_L_EyelidUpperA',         '上眼皮控制器_D',
+ 
+ 'locatorCTL_FACIAL_L_EyelidLowerA',         '下眼皮控制器_A',
+ 'locatorCTL_FACIAL_L_EyelidLowerB',         '下眼皮控制器_B',
+ 'locatorCTL_FACIAL_L_EyesackLower',         '下眼皮控制器_C',
+ 'locatorCTL_FACIAL_C_TeethUpper'  ,         '上牙齿控制器',
+ 'locatorCTL_FACIAL_C_TeethLower'  ,         '下牙齿控制器',
+]

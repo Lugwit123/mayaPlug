@@ -1,0 +1,791 @@
+# -*- coding: utf8
+import maya.cmds as cmds
+import maya.api.OpenMaya as om
+import copy,json,sys
+from imp import reload
+import codecs
+sys.path.append(r'D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug')
+import load_pymel
+pm=load_pymel.pm
+# rl4Node=cmds.ls(type='embeddedNodeRL4')[0]
+
+# connectAttr -f rl4Embedded_Hana_rl.jntTranslationOutputs[1000] closestPointOnMesh3.inPositionX;
+jointNewWSPosDict = {}
+oriMeshBackup = ''
+
+
+def getEyeHhtRatio(oriMesh, tarMesh, eyeVteList=[]):
+    disList = []
+    for ele in [oriMesh, tarMesh]:
+        eyeVtxA = ele+'.vtx[7816]'
+        eyeVtxB = ele+'.vtx[21743]'
+        eyeVtxA_pos = cmds.xform(eyeVtxA, q=1, ws=1, t=1)
+        eyeVtxB_pos = cmds.xform(eyeVtxB, q=1, ws=1, t=1)
+        disZAxis = eyeVtxA_pos[2]-eyeVtxB_pos[2]
+        disYAxis = eyeVtxA_pos[1]-eyeVtxB_pos[1]
+        disList.append([disYAxis, disZAxis])
+    # disYAxis_list.sort()
+    yRatio = disList[0][0]/disList[1][0]
+    zRatio = disList[0][1]/disList[1][1]
+    print(u'原始模型与目标模型眼睛的高度比例为;{}\n{}'.format(disList, (yRatio, zRatio)))
+    return yRatio, disList
+
+
+def getAverVal(xf):
+    averVal = []
+    for i in range(3):
+        v = (xf[i]+xf[i+3]+xf[i+6]+xf[i+9])/4
+        averVal.append(v)
+    return averVal
+
+
+def getClosestVertex(mayaMesh, pos=[0, 0, 0]):
+    mVector = om.MVector(pos)  # using MVector type to represent position
+    selectionList = om.MSelectionList()
+    selectionList.add(mayaMesh)
+    dPath = selectionList.getDagPath(0)
+    mMesh = om.MFnMesh(dPath)
+    ID = mMesh.getClosestPoint(om.MPoint(mVector), space=om.MSpace.kWorld)[
+        1]  # getting closest face ID
+    list = cmds.ls(cmds.polyListComponentConversion(
+        mayaMesh+'.f['+str(ID)+']', ff=True, tv=True), flatten=True)  # face's vertices list
+    # setting vertex [0] as the closest one
+    d = mVector-om.MVector(cmds.xform(list[0], t=True, ws=True, q=True))
+    # using distance squared to compare distance
+    smallestDist2 = d.x*d.x+d.y*d.y+d.z*d.z
+    closest = list[0]
+    # iterating from vertex [1]
+    for i in range(1, len(list)):
+        d = mVector-om.MVector(cmds.xform(list[i], t=True, ws=True, q=True))
+        d2 = d.x*d.x+d.y*d.y+d.z*d.z
+        if d2 < smallestDist2:
+            smallestDist2 = d2
+            closest = list[i]
+    return closest
+
+
+def jntNearPointFunc(jnt, oriMesh):  # 获取骨骼最近的面
+    jntPos = cmds.xform(jnt, q=1, t=1, ws=1)
+    nearPoint = getClosestVertex(oriMesh, jntPos).split('[')[1].split(']')[0]
+    nearPoint = int(nearPoint)
+    print(nearPoint)
+    return jnt, nearPoint
+# print jntNearPointFunc(u'DHIhead:head',oriMesh)
+
+# 使用python api 2.0 获取某一个方向的最近的面
+
+
+def getNearFaceInDir(jnt, oriMesh, dirVector=om.MFloatVector(1, 0, 0)):
+    jntPos = cmds.xform(jnt, q=1, t=1, ws=1)
+    sel = om.MSelectionList()
+    sel.add(oriMesh)
+    dag_path = sel.getDagPath(0)
+    mfn_mesh = om.MFnMesh(dag_path)
+    has_int = mfn_mesh.allIntersections(
+        om.MFloatPoint(jntPos[0], jntPos[1], jntPos[2]),
+        dirVector,
+        5,
+        100,
+        True)
+    for x in has_int:
+        print('has_int: ', x)
+
+    print('\n')
+    if has_int[0]:
+        disList = []
+        for x in has_int[1]:
+            disList.append(abs(x))
+        print('disList:', disList)
+        sortDisList = copy.copy(disList)
+        sortDisList.sort()
+        print(u'排序距离列表sortDisList:{}'.format(sortDisList))
+        indexA = disList.index(sortDisList[0])
+        #indexB = disList.index(sortDisList[1])
+        print('indexA:', sortDisList[0])
+        print (u'最近的面在列表disList{}\n里面的序号是{}'.format(disList,indexA))
+        print(has_int[2][indexA])
+        return has_int[2][indexA]
+    else:
+        print(u'叶端骨骼')
+        return None
+
+
+def getTargetPos(jnt):
+    # 骨骼离新模型最近点的世界空间中的位置
+    jointNewWSPosList = jointNewWSPosListFunc(jnt)
+    nearFaceNewWSPos = jointNewWSPosList[0]  # 新的最近面的位置
+    print(u'新模型最近面的位置是{}'.format(nearFaceNewWSPos))
+    # 骨骼在原始模型原始位置对应面说对应的位置
+    faceOriWSPos = jointNewWSPosList[1]  # 原始位置
+    print(u'旧模型最近面的位置是{}'.format(faceOriWSPos))
+    delta = [nearFaceNewWSPos[i]-faceOriWSPos[i] for i in range(3)]  # 变化位置
+
+    jntNowPosWS = cmds.xform(jnt, q=1, ws=1, t=1)  # 现在位置世界空间的位置
+    # 骨骼应该在世界空间中的位置是
+    jntNewPosWS = [jntNowPosWS[i]+delta[i] for i in range(3)]
+    print(jnt, '\n')
+    return jntNewPosWS
+
+# 获取最近的 x轴和z轴的最近的面,获取的骨骼最近的面的新的位置
+def getJntNewPos(jnt, oriMesh, tarMesh, debug=1):
+    oriMesh = cmds.listRelatives(oriMesh, s=1)[0]
+    tarMesh = cmds.listRelatives(tarMesh, s=1)[0]
+    child = cmds.listRelatives(jnt, type='joint', c=1)
+    if child:
+        childNum = len(child )
+    else:
+        childNum=0
+    jntPos = cmds.xform(jnt, q=1, ws=1, t=1)
+    hasChild = bool(child)
+    if debug:
+        print ( u'获取骨骼{}最新位置:,有子级骨骼:{}'.format(jnt, hasChild))
+        print (u'骨骼时间空间位置是:{}'.format(jntPos))
+    # if child:
+    #     childNum = len(child)
+    #     if childNum == 1:
+    #         childJntPos = cmds.xform(child[0], q=1, ws=1, t=1)
+    #         print(u'子级骨骼:{}位置是:{}'.format(child, childJntPos))
+    #         for i in range(3):
+    #             if abs(jntPos[i]-childJntPos[i]) > 0.1:
+    #                 print(u'坐标:{}位置差异超过0.1'.format('xyz'[i]))
+    #                 childNum = 2
+    #                 break
+    print (childNum)
+    if hasChild and childNum > 1:  # and not 'Eye' in jnt:
+        # 获取一个方向向量与模型相交得到最近的面的序号
+        xFaceIndex = getNearFaceInDir(
+            jnt, oriMesh, dirVector=om.MFloatVector(0, 1, 0))
+        zFaceIndex = getNearFaceInDir(
+            jnt, oriMesh, dirVector=om.MFloatVector(1, 0, 0))
+        print(xFaceIndex, zFaceIndex, '+++++++++++++++++++++')
+        # 得到面序号之后查询面在目标模型上的位置
+        if xFaceIndex and zFaceIndex:
+            x = cmds.xform(u'{}.f[{}]'.format(
+                tarMesh, xFaceIndex), q=1, t=1, ws=1)
+            z = cmds.xform(u'{}.f[{}]'.format(
+                tarMesh, xFaceIndex), q=1, t=1, ws=1)
+            y = cmds.xform(u'{}.f[{}]'.format(
+                tarMesh, zFaceIndex), q=1, t=1, ws=1)
+            # 把面的中心点作为相交点的位置
+            x, y, z = getAverVal(x)[0], getAverVal(y)[1], getAverVal(z)[2]
+            print(u'目标位置\nx:{}\n,y:{}\n,z:{}'.format(x, y, z))
+            cmds.select(u'{}.f[{}]'.format(tarMesh, zFaceIndex))
+            cmds.select(u'{}.f[{}]'.format(oriMesh, zFaceIndex), add=1)
+            # cmds.error('debug')
+            print('\n')
+            return (x, y, z)
+    else:
+        print(u'使用最近点的方式查找')
+        # 对于尖端骨骼先查找最近的面计算相对移动之后获取骨骼新的位置
+        jntNearPoint = jntNearPointFunc(jnt, oriMesh)
+        print('jntNearPoint:', jntNearPoint)
+        # 获取目标面在目标模型上的位置
+        print(u'最近的点是:{}'.format(jntNearPoint[1]))
+        tarFacePos = cmds.xform(u'{}.vtx[{}]'.format(
+            tarMesh, jntNearPoint[1]), q=1, t=1, ws=1)
+        # 获取原始面在原始模型上的位置
+        oriFacePos = cmds.xform(u'{}.vtx[{}]'.format(
+            oriMesh, jntNearPoint[1]), q=1, t=1, ws=1)
+        delta = [tarFacePos[i]-oriFacePos[i] for i in range(3)]  # 变化位置
+        jntNowPosWS = cmds.xform(jnt, q=1, ws=1, t=1)  # 查询骨骼现在位置世界空间的位置
+        # 骨骼应该在世界空间中的位置是
+        jntNewPosWS = [jntNowPosWS[i]+delta[i] for i in range(3)]
+        print('\n')
+        return jntNewPosWS
+
+
+# print getJntNewPos('DHIhead:FACIAL_C_MouthUpper',oriMesh=oriMeshBackup,tarMesh=tarMesh)  ,'---------------------------'
+
+
+# getTargetPos(u'DHIhead:FACIAL_R_12IPV_MouthInteriorLower1')
+# 查询每一根骨骼目标面的位置
+def gettarPosDictFunc(tarMesh, oriMesh, rootJoint='DHIhead:FACIAL_C_LipLower', includeCld=1):  # 获取骨骼的目标位置字典
+    rootJointChildren = cmds.listRelatives(rootJoint, c=1, ad=1, type='joint')
+    if not rootJointChildren:
+        rootJointChildren = []
+    gettarPosDict = {}
+    if includeCld:
+        rootJointChildren.append(rootJoint)
+        for jnt in rootJointChildren:
+            pos = getJntNewPos(jnt, oriMesh, tarMesh)
+            gettarPosDict[jnt] = pos
+    else:
+        pos = getJntNewPos(rootJoint, oriMesh, tarMesh)
+        gettarPosDict[rootJoint] = pos
+    print(u'获取骨骼的目标位置字典结束,结果是:{}'.format(gettarPosDict))
+    return gettarPosDict
+
+
+def moveJoint(jnt):  # moveJoint(u'DHIhead:FACIAL_C_LowerLipRotation')
+    conList = []
+    for i in range(3):
+        attrName = jnt+'.t'+'xyz'[i]
+        con = cmds.listConnections(attrName, s=1, p=1)  # 获取骨骼的输入连接
+        if con:
+            conList.append(['hasInput', (con[0], attrName)])
+        else:
+            # 如果没有输入连接返回noInput
+            print(i)
+            attValue = cmds.getAttr(attrName)
+            conList.append(['noInput', attValue])
+
+    print(u'骨骼{}的位移输入连接:{}'.format(jnt, conList))
+    for i in range(3):
+        try:
+            jntlink = cmds.listConnections(jnt+'.t'+'xyz'[i], p=1, s=1)
+            print(jntlink)
+            if jntlink:
+                cmds.disconnectAttr(jntlink[0], jnt+'.t'+'xyz'[i])
+        except:
+            cmds.error(u'骨骼{}输入属性没有被断掉'.format(jnt))
+    # 查询骨骼在局部空间中的位置
+    jntNowPosLS = cmds.xform(jnt, q=1, ws=0, t=1)  # 现在位置局部空间的位置
+    print(u'查询骨骼{}在局部空间中的位置'.format(jntNowPosLS))
+    # 移动骨骼至应该变化的位置
+    jntNewPosWS = jointNewWSPosDict[jnt]
+    if jntNewPosWS:
+        x = jntNewPosWS[0]
+        y = jntNewPosWS[1]
+        z = jntNewPosWS[2]
+        print(u'骨骼应当移动到世界空间中的位置是:{}'.format(jntNewPosWS))
+        cmds.move(x, y, z, jnt, ws=1, a=1,pcp=1)
+        # 新的局部空间的位置是
+        newLocalPos = cmds.getAttr(jnt+'.translate')[0]
+        print(u'新的局部空间位置应该是:{}'.format(newLocalPos))
+        # 在局部空间中的变化值是
+        deltaPosInLS = [newLocalPos[i]-jntNowPosLS[i] for i in range(3)]
+        # 新位置=DNA输出值+偏移量
+        # 创建加减节点
+        pluSub = cmds.createNode(u'plusMinusAverage')
+        isCreateCtl=createLocatorControl(jnt, pluSub, [x, y, z])
+        print(u'创建控制器{}'.format(isCreateCtl))
+        # 获取到r4节点的连接列表
+        x, y, z = deltaPosInLS[0], deltaPosInLS[1], deltaPosInLS[2]
+        # 设置加法节点的输入一位变化值减去初始值
+        # 连接r4节点的输出端到加法节点的输入端1
+        cmds.setAttr(pluSub+'.input3D[0]', x, y, z)
+        cmds.connectAttr(pluSub+'.output3D', jnt+'.translate', f=1)
+        print('conList:', conList)
+        for index, conList_A in enumerate(conList):
+            if conList_A[0] == 'hasInput':
+                attrName = pluSub+'.input3D[1].input3D'+'xyz'[index]
+                cmds.connectAttr(conList_A[1][0], attrName)
+            elif conList_A[0] == 'noInput':
+                cmds.setAttr(
+                    pluSub+'.input3D[1].input3D'+'xyz'[index], conList_A[1])
+        print(u'移动骨骼{}成功\n\n'.format(jnt))
+        return jnt, pluSub
+
+
+def jntAddRotPlus(jnt, oriMesh, tarMesh):
+    eyeHhtRatio = getEyeHhtRatio(oriMesh, tarMesh)
+    #if '_Eye' in jnt:
+    if ':' in jnt:
+        ctlNodeName='locatorCTL_'+jnt.split(':')[1]
+    else:
+            ctlNodeName='locatorCTL_'+jnt
+    if cmds.objExists(ctlNodeName):
+        multiplyDivide = cmds.createNode(u'multiplyDivide')
+        cmds.connectAttr(ctlNodeName+'.rotate',multiplyDivide+'.input1', f=1)
+        #     ratio = eyeHhtRatio[0]
+        #     print(u'眼睛高度比例为:', ratio,)
+        #     cmds.setAttr(multiplyDivide+'.input1', 1/ratio, 1, 1)
+        for i in range(3):
+            #获取骨骼连接的r4节点信息,0号是骨骼输入,1号是r4输出
+            con = cmds.listConnections(jnt+'.r'+'xyz'[i], p=1, c=1)
+            if con:
+                multiplyDivideInput = multiplyDivide+'.input2.input2'+'XYZ'[i]
+                #r4输出控制乘除节点的第2个输入端
+                cmds.connectAttr(con[1], multiplyDivideInput, f=1)
+                multiplyDivideOutput = multiplyDivide+'.output'+'XYZ'[i]
+                # cmds.disconnectAttr(con[1],con[0])
+                #连接程序接连的输出端到估计节点的旋转输入端
+                cmds.connectAttr(multiplyDivideOutput, con[0], f=1)
+
+# 创建locator控制器
+def createLocatorControl(jnt, plusMinusNode, jntWSPos):
+    createLoc = 1
+    #if '_Eye' in jnt:
+    parentJnt = cmds.listRelatives(jnt, type='joint', p=1)
+    jntPos = cmds.xform(jnt, q=1, ws=1, t=1)
+    if parentJnt:
+        parentJnt=parentJnt[0]
+        parentJntPos = cmds.xform(parentJnt, q=1, ws=1, t=1)
+        print(u'父级{}位置为\n{},\n该级{}位置为:\n{}'.format(
+        parentJnt, parentJntPos, jnt, jntPos))
+    # cldjnt=cmds.listRelatives(jnt,type='joint',c=1)
+    # if cldjnt:
+    # if len(cldjnt)==1:
+    # for i in range(3):
+    #     if abs(jntPos[i]-parentJntPos[i]) > 0.1:
+    #         print(u'坐标:{}位置差异小于0.1,不创建locator'.format('xyz'[i]))
+    #         createLoc = 1
+    #         break
+    if createLoc:
+        cmds.CreateLocator()
+        locator = cmds.ls(sl=1)[0]
+        cmds.setAttr(locator+'.rx', 1)
+        cmds.setAttr(locator+'.ry', 1)
+        cmds.setAttr(locator+'.rz', 1 )
+        cmds.setAttr(locator+'.scale', 0.2,0.2,0.2)
+        cmds.setAttr(locator+'.sx', l=1)
+        cmds.setAttr(locator+'.sy', l=1)
+        cmds.setAttr(locator+'.sz', l=1)
+        cmds.setAttr(locator+'.overrideEnabled', 1)
+        jntColor = cmds.getAttr(jnt+'.overrideColor')
+        print(u'骨骼{}的颜色指数为{}'.format(jnt, jntColor))
+        cmds.setAttr(locator+'.overrideColor', jntColor)
+        cmds.move(jntWSPos[0], jntWSPos[1], jntWSPos[2], locator, a=1)
+        cmds.makeIdentity(locator, apply=True, t=1, r=0, s=0, n=0)
+        #cmds.connectAttr(locator+'.translate', plusMinusNode+'.input3D[2]')
+        cmds.connectAttr(locator+'.tz', plusMinusNode+'.input3D[2].input3Dy')
+        cmds.connectAttr(locator+'.tx', plusMinusNode+'.input3D[2].input3Dx')
+        mdNode=cmds.createNode('multiplyDivide')
+        cmds.connectAttr(locator+'.ty', mdNode+'.input1X')
+        cmds.setAttr(mdNode+'.input2X', -1)
+        cmds.connectAttr(mdNode+'.outputX', plusMinusNode+'.input3D[2].input3Dz')
+        if ':' in jnt:
+            locatorNewName=cmds.rename(locator, 'locatorCTL_'+jnt.split(':')[1])
+        else:
+            locatorNewName=cmds.rename(locator, 'locatorCTL_'+jnt)
+        cmds.parent(locatorNewName,'locatorCTL')
+        return locatorNewName
+
+
+def updateLocatorPos(*args):
+    locators = cmds.ls('locatorCTL_*', type='transform')
+    sl = cmds.ls(sl=1)
+    allOrSel=cmds.checkBox('allOrSel',q=1,v=1)
+    for locator in locators:
+        if not allOrSel:#部分选择
+            if sl:
+                if locator not in sl:
+                    continue
+        jnt_head = 'DHIhead:'+locator.split('locatorCTL_')[1]
+        jnt_body = locator.split('locatorCTL_')[1]
+        if cmds.objExists(jnt_head):
+            jnt=jnt_head
+        else:
+            jnt=jnt_body
+        locPos = cmds.xform(locator, q=1, ws=1, t=1)
+        plusMinusNode = cmds.listConnections(locator+'.tx')[0]
+        plusMinusNode_3=cmds.getAttr(plusMinusNode+'.input3D[3]')
+        jntWSPos = cmds.xform(jnt, q=1, ws=1, t=1)
+        locatorShape = cmds.listRelatives(locator, s=1)[0]
+        cmds.setAttr(locator+'.localPosition', 0, 0, 0)
+        cmds.move(jntWSPos[0], jntWSPos[1], jntWSPos[2], locator, ws=1, a=1)
+        
+        cmds.makeIdentity(locator, apply=True, t=1, r=0, s=0, n=0)
+        x,y,z=plusMinusNode_3[0][0],plusMinusNode_3[0][1],plusMinusNode_3[0][2]
+        cmds.setAttr(
+            plusMinusNode+'.input3D[3]', locPos[0]+x, locPos[2]+y, -locPos[1]+z)
+        cmds.xform(locator,cpc=1)
+        # break
+
+def resetLoctorPos(*args):
+    locators = cmds.ls('locatorCTL_*', type='transform')
+    sl = cmds.ls(sl=1)
+    allOrSel=cmds.checkBox('allOrSel',q=1,v=1)
+    for locator in locators:
+        if not allOrSel:#部分选择
+            if sl:
+                if locator not in sl:
+                    continue
+        locPos = cmds.setAttr(locator+'.translate', 0, 0,0)
+        locPos = cmds.setAttr(locator+'.rotate', 1, 1,1)
+        plusMinusNode = cmds.listConnections(locator+'.tx')[0]
+        cmds.setAttr(plusMinusNode+'.input3D[3]', 0, 0,0)
+
+# 偏移控制locator
+def offsetLocator(offfsetAmount=0.2):
+    locators = cmds.ls('locatorCTL_*', type='transform')
+    sl = cmds.ls(sl=1)
+    for locator in locators:
+        if sl:
+            if locator not in sl:
+                continue
+        jnt = 'DHIhead:'+locator.split('locatorCTL_')[1]
+        locPos = cmds.xform(locator, r=1, t=(0, 0, offfsetAmount))
+        plusMinusNode = cmds.listConnections(locator+'.translate')[0]
+        # jntWSPos=cmds.xform(jnt,q=1,ws=1,t=1)
+        # locatorShape=cmds.listRelatives(locator,s=1)[0]
+        # cmds.setAttr(locator+'.localPosition',0,0,0)
+        # cmds.move(jntWSPos[0],jntWSPos[1],jntWSPos[2],locator,ws=1,a=1)
+        pm3_Value = cmds.getAttr(plusMinusNode+'.input3D[3].input3Dz')
+        cmds.setAttr(
+            plusMinusNode+'.input3D[3].input3Dz', pm3_Value-offfsetAmount)
+        # break
+
+
+def moveCartilageToTarMesh(*args):
+
+    Obj=pm.ls(sl=1)
+    cartilageMesh=Obj[0]
+    oriMesh=Obj[1]
+    tarMesh=Obj[2]
+    tarMesh = pm.ls(tarMesh)[0]
+    cartilageShape = pm.ls(cartilageMesh)[0].getShape()
+    cartilage_vtx = cartilageShape.vtx
+    for index, vtx in enumerate(cartilage_vtx):
+        # if index!=280:
+        # continue
+        closestPoint = oriMesh.getClosestPoint(vtx.getPosition(space='world'))
+        print(u'旧的位置是:{}'.format(closestPoint[0]))
+        print(u'旧的面是:{}'.format(closestPoint[0]))
+        # 最近的点位置和面序号
+        closestPointFaceIndex = closestPoint[1]
+        closestPointFaceIndex
+        # 最近的面的序号
+        face = oriMesh.f[closestPointFaceIndex]
+        # 获取面上顶点的位置
+        disList = []
+        for face_vtx in face.getVertices():
+            face_vtx_pos = oriMesh.vtx[face_vtx].getPosition()
+            dis = closestPoint[0].distanceTo(face_vtx_pos)
+            disList.append(dis)
+        print(u'距离列表', disList)
+        disListBackup = copy.copy(disList)
+        disList.sort()
+        # 获取最近点的指数
+        minDisIndex = disListBackup.index(disList[0])
+        print(minDisIndex)
+        # 获取最近的顶点
+        nearVtxIndex = face.getVertices()[minDisIndex]
+        print(u'最近的点序号是{}'.format(nearVtxIndex))
+        # 某个位置在面上的uv坐标
+        # 在目标模型上的位置
+        cmds.select(str(vtx))
+        newPos = tarMesh.vtx[nearVtxIndex].getPosition()
+        print(u'新的位置是:{}'.format(newPos))
+        cmds.xform(str(vtx), ws=1, t=[newPos[0], newPos[1], newPos[2]])
+        #break
+
+
+def processJointFunc(rootJoint, oriMesh, tarMesh,recursionDepth=2000):
+    moveJoint(rootJoint)
+    jntAddRotPlus(rootJoint, oriMesh, tarMesh)
+    index=[0]
+    def processJoint(rootJoint, oriMesh, tarMesh):
+        children = cmds.listRelatives(rootJoint, c=1, type='joint')
+        if children:
+            for child in children:
+                
+                print(u'child', child)
+                child_A = cmds.listRelatives(child, c=1, type='joint')
+                moveJoint(child)
+                # if child=='hand_r_drv':
+                #     cmds.error(u'_+_+_+_+_+_+_')
+                jntAddRotPlus(child, oriMesh, tarMesh)
+                index[0]+=1
+                if index[0]>recursionDepth:
+                    cmds.error(u'达到最大递归深度{}'.format(recursionDepth))
+                if child_A:
+                    processJoint(child, oriMesh, tarMesh)
+    processJoint(rootJoint, oriMesh, tarMesh)
+            
+
+
+def matchJntPos(aa='',recursionDepth=100000,oriMesh='head_lod0_mesh', tarMesh='head_mesh', test=0, testjnt='DHIhead:FACIAL_L_Eye', rootJoint='DHIhead:neck_01'):
+    # 修改jointNewWSPosDict变量,里面存储的每根骨骼的目标位置
+    global jointNewWSPosDict
+    sl=cmds.ls(sl=1)
+    if sl:
+        oriMesh=sl[0]
+        tarMesh=sl[1]
+        rootJoint=sl[2]
+    # 备份原始模型
+    locatorCTLGroup='locatorCTL'
+    if not cmds.objExists('locatorCTL'):
+        locatorCTLGroup=cmds.spaceLocator(n='locatorCTL')[0]
+    print (oriMesh,testjnt,tarMesh,)
+    oriMeshBackupTr = cmds.duplicate(oriMesh)[0]
+    # 原始模型细分
+    cmds.polySmooth(oriMeshBackupTr, dv=2)
+    # 细分目标模型
+    subNode = cmds.polySmooth(tarMesh, dv=2)
+    # 取消选择
+    cmds.select(cl=1)
+    if test:
+        jointNewWSPosDict = gettarPosDictFunc(
+            oriMesh=oriMeshBackupTr, tarMesh=tarMesh, rootJoint=testjnt, includeCld=recursionDepth)
+        print(jointNewWSPosDict)
+        print ('\n------------------------------')
+        processJointFunc(testjnt, oriMesh, tarMesh)
+        cmds.select(testjnt)
+    else:
+        jointNewWSPosDict = gettarPosDictFunc(
+            oriMesh=oriMeshBackupTr, tarMesh=tarMesh, rootJoint=rootJoint, includeCld=recursionDepth)
+        print ('\n------------------------------')
+        processJointFunc(rootJoint, oriMesh, tarMesh,recursionDepth=recursionDepth)
+    cmds.select(oriMeshBackupTr)
+    cmds.delete(oriMeshBackupTr)
+    print(u'删除备份模型')
+    cmds.setAttr(subNode[0]+'.divisions', 0)
+    cmds.select(tarMesh)
+    cmds.DeleteHistory()
+    cmds.select(cl=1)
+
+# 自动绑定
+
+
+def autoBind(*args):
+    matchDict = {'head_lod0_mesh': 'head_mesh',
+                 'cartilage_lod0_mesh': 'cartilage_lod0_mesh1'}
+    rootJnt = 'DHIhead:spine_04'
+    for oriTr, tarTr in matchDict.items():
+        ori = cmds.listRelatives(oriTr, s=1)[0]
+        tar = cmds.listRelatives(tarTr, s=1)[0]
+        cmds.select(tar)
+        cmds.DeleteHistory()
+        skNode = cmds.skinCluster(rootJnt, tar, omi=1, mi=12)
+        skOrgi = cmds.listConnections(ori, type='skinCluster')[0]
+        skDs = cmds.listConnections(tar, type='skinCluster')[0]
+        cmds.copySkinWeights(ss=skOrgi, ds=skDs, surfaceAssociation='closestPoint', uvSpace=['map1', 'map1'],
+                             influenceAssociation=['oneToOne', 'oneToOne', 'oneToOne'], noMirror=1)
+
+def bindHead(*args):
+    rootJnt='DHIhead:spine_04'
+    oriMesh=pm.ls('head_lod0_mesh')[0]
+    tarMesh=pm.ls('head_mesh')[0]
+    pm.makeIdentity(tarMesh, apply=True, t=1, r=1, s=0, n=0)
+    oriMeshShape=oriMesh.getShape()
+    pm.select(tarMesh)
+    cmds.DeleteHistory()
+    tarMesh_copyAsWgtSource=pm.duplicate(tarMesh,n='Head_WgtBackup')[0]
+    skNode=pm.skinCluster( rootJnt,tarMesh_copyAsWgtSource.getShape(),omi=1,mi=12)
+    GroupParts=oriMesh.getShapes()[1].worldMesh[0].outputs(p=1)[0]
+    tarMesh_copyAsOrgi=pm.duplicate(tarMesh,n=oriMesh+'_NewOrgi')[0]
+    oldSKNode=pm.listHistory(oriMeshShape,type='skinCluster')[0]
+    pm.copySkinWeights(ss=oldSKNode, ds=skNode, surfaceAssociation='closestPoint', uvSpace=['map1', 'map1'],
+                        influenceAssociation=['oneToOne', 'oneToOne', 'oneToOne'],nm=1)
+    pm.delete(oldSKNode)
+
+    tarMesh_copyAsOrgiShape=pm.parent(tarMesh_copyAsOrgi.getShape(),oriMesh,add=1,s=1)[0]
+    tarMesh_copyAsOrgiShape.worldMesh[0].connect(GroupParts,f=1)
+    skDS = pm.skinCluster( rootJnt,oriMeshShape,omi=1,mi=12)
+    pm.copySkinWeights(ss=skNode, ds=skDS, surfaceAssociation='closestPoint', uvSpace=['map1', 'map1'],
+                        influenceAssociation=['oneToOne', 'oneToOne', 'oneToOne'],nm=1)
+    tarMesh.visibility.set(0)
+    tarMesh_copyAsWgtSource.visibility.set(0)
+    tarMesh_copyAsOrgi.visibility.set(0)
+    
+    tarMesh_copyAsOrgi.visibility.set(0)
+
+def mirrorLocatorDate(*args):
+    locators = cmds.ls('locatorCTL|*_L_*', type='transform')
+    cmds.select(locators)
+    sl = cmds.ls(sl=1)
+    allOrSel=cmds.checkBox('allOrSel',q=1,v=1)
+    for locator in locators:
+        if not allOrSel:#部分选择
+            if sl:
+                if locator not in sl:
+                    continue
+        locPos = cmds.getAttr(locator+'.translate')
+        
+        plusMinusNode = cmds.listConnections(locator+'.tx')[0]
+        plusMinusNode_3_Value=cmds.getAttr(plusMinusNode+'.input3D[3]')
+        #对应的右边的locator的命名
+        locator_R=locator.replace('_L_','_R_')
+        #设置右边locator的位移数据
+        x,y,z=locPos[0][0],locPos[0][1],locPos[0][2]
+        if x!=0 or y!=0 or z!=0:
+            cmds.warning(u'镜像控制器{},位置为{}'.format(locator,locPos[0]))
+        cmds.setAttr(locator_R+'.translate',-x,y,z)
+        plusMinusNode_R = cmds.listConnections(locator_R+'.tx')[0]
+        x,y,z=plusMinusNode_3_Value[0][0],plusMinusNode_3_Value[0][1],plusMinusNode_3_Value[0][2]
+        #设置加减法的三号偏移
+        #cmds.setAttr(plusMinusNode_R+'.input3D[3]',-x,y,z)
+        #cmds.setAttr(locator+'.localPosition', 0, 0, 0)
+        #设置旋转属性
+        locRot = cmds.getAttr(locator+'.rotate')
+        x,y,z=locRot[0][0],locRot[0][1],locRot[0][2]
+        locRot_R=cmds.getAttr(locator_R+'.rotate')[0]
+        x_R,y_R,z_R=locRot_R[0],locRot_R[1],locRot_R[2]
+        if x!=x_R or y!=y_R or z!=z_R:
+            cmds.warning(u'镜像控制器{},旋转为{},{}'.format(locator,locRot[0],locRot_R))
+            cmds.setAttr(locator_R+'.rotate',x,y,z)
+
+def savelocatorDate(allDate='',*args):
+    import maya.cmds as cmds
+    def savelocatorDateCommand(*args):
+        allDate=1
+        locatorDict={}
+        presetDir=r'S:/DataTrans/FQQ/plug_in/Lugwit_plug/mayaPlug/scripts/Rig/preset'
+        presetName=  cmds.textFieldGrp(u'saveCtlDateName',q=1,text=1)
+        presetFile=presetDir+'/'+presetName+'.json'
+        try :
+            with codecs.open(presetFile,'r',encoding='utf-8') as open_presetFile:
+                fileContent=open_presetFile.read()
+                if fileContent:
+                    locatorDict=eval(fileContent)
+        except:
+            cmds.warning(u'没有已存在预设,新建预设{}'.format(presetFile))
+        
+        locators = cmds.ls('locatorCTL|*', type='transform')
+        cmds.select(locators)
+        sl = cmds.ls(sl=1)
+        allOrSel=cmds.checkBoxGrp('allOrSel',q=1,v1=1)
+        locatotCtlKeyWord=cmds.textFieldGrp('locatotCtlKeyWord',q=1,text=1)
+        for locator in locators:
+            if not allOrSel:#u部分选择
+                if locator  not in sl:
+                    continue
+            if locatotCtlKeyWord:
+                ignore=1
+                for KeyWord in locatotCtlKeyWord.split(' '):
+                    if KeyWord in locator:
+                        ignore=0
+                        break
+                if ignore==1:
+                    cmds.warning(u'忽略控制器:{}'.format(locator))
+                    continue
+                    
+            locPos = cmds.getAttr(locator+'.translate')[0]
+            locRot = cmds.getAttr(locator+'.rotate')[0]
+            plusMinusNode = cmds.listConnections(locator+'.tx')[0]
+            plusMinusNode_3_Value=cmds.getAttr(plusMinusNode+'.input3D[3]')[0]
+            locatorDict[locator]=(locPos,plusMinusNode_3_Value,locRot)
+        with codecs.open(presetFile,'w',encoding='utf-8') as  open_presetFile:
+                open_presetFile.write(str(locatorDict))
+    if cmds.window('saveCtlDateWin',q=1,ex=1):
+        cmds.deleteUI('saveCtlDateWin',cmds.window('saveCtlDateWin'))
+    cmds.window(title=u'存储locator控制器数据')
+    cmds.rowColumnLayout(adj=1)
+    cmds.textFieldGrp('locatotCtlKeyWord',l=u'请输入控制器关键字',text='Eye')
+    cmds.text(l=u'提醒:多个关键字用空格隔开')
+    cmds.textFieldGrp(u'saveCtlDateName',l=u'请输入预设名称',text=u'闭眼预设')
+    cmds.checkBoxGrp('allOrSel',l=u'存储全部控制器数据',v1=1)
+    cmds.button(u'存储预设',c=savelocatorDateCommand)
+    cmds.showWindow()
+
+def importCtlPreset(*args):                   
+    import os,glob
+    import functools
+    presetDir='S:/DataTrans/FQQ/plug_in/Lugwit_plug/mayaPlug/scripts/Rig/preset'
+    jsonFileList=glob.glob(presetDir+r'/*.json')
+    if cmds.control('eyeCtlPreserWin',q=1,ex=1):
+        cmds.showWindow('eyeCtlPreserWin')
+    else:
+        cmds.window('eyeCtlPreserWin',w=220,title=u'locator控制区预设',h=90)
+        cmds.rowColumnLayout(adj=1)
+        for jsonFile in jsonFileList:
+            jsonFileName=os.path.basename(jsonFile).split('.')[0]
+            print ('type(jsonFileName):',type(jsonFileName))
+            cmds.button(l=u'导入预设 : '+jsonFileName.decode('gbk'),c=functools.partial(restoreCtlDate,jsonFile))
+        cmds.showWindow()
+        
+def restoreCtlDate(jsonFilePath,*args):
+    with codecs.open(jsonFilePath,'r',encoding='utf-8') as open_jsonFile:
+        ctlDict=eval(open_jsonFile.read())
+        if ctlDict:
+            for locatorName,value in ctlDict.items():
+                if cmds.objExists(locatorName):
+                    tx,ty,tz=value[0][0],value[0][1],value[0][2]
+                    pmx,pmy,pmz=value[1][0],value[1][1],value[1][2]
+                    plusMinusNode = cmds.listConnections(locatorName+'.tx')[0]
+                    rx,ry,rz=value[2][0],value[2][1],value[2][2]
+                    cmds.setAttr(locatorName+'.translate',tx,ty,tz)
+                    cmds.setAttr(plusMinusNode+'.input3D[3]',pmx,pmy,pmz)
+                    cmds.setAttr(locatorName+'.rotate',rx,ry,rz)
+                
+def resetPhiz(*args):
+    ctls=cmds.listRelatives('CTRL_faceGUI',ad=1,type='transform')
+    for ctl in ctls:
+        if 'CTRL' in ctl:
+            for ele in 'xyz':
+                if not cmds.getAttr(ctl+'.t'+ele,l=1):
+                    try:
+                        cmds.setAttr(ctl+'.t'+ele,0) 
+                    except:
+                        pass
+                    
+
+
+def toggleCtlShow(*args):
+    getVis=cmds.getAttr('locatorCTL.visibility')
+    cmds.setAttr('locatorCTL.visibility',1-getVis) 
+    
+def metaHuman(*args):
+    cmds.window( menuBar=True, width=200 )
+    cmds.rowColumnLayout(adj=1)
+    cmds.button(u'切换CTL可见性',c=toggleCtlShow)
+    cmds.showWindow()
+
+def selCtlVsVtx(*args):
+    import os,sys
+    #获取选择的顶点
+    jnts=[]
+    verts = pm.selected()
+    for vert in verts:
+        #获取顶点的网格
+        mesh = vert.node()
+        #获取网格的绑定
+        sc = mesh.listHistory(type='skinCluster')[0]
+        #获取网格的所有骨骼
+        infs = sc.influenceObjects()
+        #获取顶点的序号
+        vId = vert.currentItemIndex()
+        #对所有骨骼循环
+        for jId in xrange(sc.numInfluenceObjects()):
+            jnt=infs[jId]
+            wgt=pm.getAttr(sc.weightList[vId].weights[jId])
+            if wgt>0:
+                jnts.append(jnt)
+    jnts= list(set(jnts))
+    print (len(jnts))
+    pm.select(jnts)
+
+
+    ctls=[]
+    sls=jnts
+    for sl in sls:
+        ctl='locatorCTL_'+sl.split(':')[1]
+        ctls.append(ctl)
+    cmds.select(ctls)
+
+
+
+def savePhizAmpDate(*args):
+    ctls=cmds.listRelatives('CTRL_faceGUI',ad=1,type='transform')
+    attrDict={}
+    for ctl in ctls:
+        if 'CTRL' in ctl:
+            for ele in 'XYZ':
+                at='Amplitude_translate'+ele
+                if cmds.attributeQuery(at,n=ctl,ex=1):
+                    value = cmds.getAttr(ctl+'.'+at)
+                    if attrDict.has_key(ctl):
+                        attrDict[ctl]=dict(attrDict[ctl].items()+{at:value}.items())
+                    else:
+                        attrDict[ctl]={at:value}
+    presetDir=r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig\preset'
+    presetFile='AA.joon'
+    data = attrDict
+    data2=json.dumps(data, sort_keys=True, indent=4, separators=(',', ': '))
+    with open(presetDir+'/'+presetFile,'w') as open_preset:
+        open_preset.write(str(data2))  
+        
+def importPhizAmpDate(*args):
+    ctls=cmds.listRelatives('CTRL_faceGUI',ad=1,type='transform')
+    presetDir=r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig\preset'
+    presetFile='AA.joon'
+    with open(presetDir+'/'+presetFile,'r') as open_preset:
+        readPreset=open_preset.read()
+    readPreset=eval(readPreset)
+    for nodeName,NodeDate in readPreset.items():
+        for attr,atttValue in NodeDate.items():
+            if cmds.attributeQuery(attr,n=nodeName,ex=1):
+                cmds.setAttr(nodeName+'.'+attr,atttValue)
+                
+def mirrorPhizAmpDate(*args):
+    ctls=cmds.listRelatives('CTRL_faceGUI',ad=1,type='transform')
+    for ctl in ctls:
+        if 'CTRL' in ctl:
+            for ele in 'XYZ':
+                at='Amplitude_translate'+ele
+                if cmds.attributeQuery(at,n=ctl,ex=1):
+                    value = cmds.getAttr(ctl+'.'+at)
+                    if '_L_' in ctl:
+                        ctl_r=ctl.replace('_L_','_R_')
+                        cmds.setAttr(ctl_r+'.'+at,value)

@@ -1,0 +1,983 @@
+# -*- coding: utf8
+from __future__ import absolute_import
+from __future__ import print_function
+from Lugwit_Module import *
+import random,re,os
+import sys
+import math
+import maya.cmds as cmds
+import maya.mel as mm
+sys.path.append(r'D:\TD_Depot\plug_in\Lugwit_plug\mayaPlug')
+import load_pymel
+pm=load_pymel.pm
+allModule = sys.modules
+
+
+#导入模块
+moduleFile = __file__
+moduleFile = moduleFile.replace('\\', '/')
+print('LugwitMayaPlugStart.py:', __file__)
+moduleDir = os.path.dirname(moduleFile)
+sys.path.append(moduleDir)
+mayaPlugDir = re.search('.+/mayaPlug', moduleFile).group()
+scriptsDir=mayaPlugDir+'/l_scripts'
+
+
+#添加模块所在路径
+
+sys.path.append(LugwitPath+'/MayaPlug/l_scripts/usualLib')
+sys.path.append(LugwitPath+r'/Python/PythonLib/generalLib')
+print ('====',LugwitPath+'/Python/PythonLib/generalLib')
+
+
+#加载第三方模块
+sys.path.append(LugwitPath+r'\mayaPlug\l_scripts\ThridLib')
+sys.path.append(LugwitPath+r'\mayaPlug\l_scripts')
+import pyperclip
+
+
+import LMath
+try:
+    from usualLib import usual as l_usual
+except:
+    pass
+
+plugDir = __file__
+orgiNameRuleDict = {'deformObj': 'head_mesh', 'eyeLashesUpper': 'eyeLashesUpper_mesh', 'eyelashesLower': 'eyelashesLower_mesh',
+                    'wetLayer': 'wetLayer_mesh', 'eyeshadow': 'eyeshadow_mesh', 'eyebrows': 'eyebrows_mesh'}
+
+def getAverVal(xf):
+    averVal = []
+    for i in range(3):
+        v = (xf[i]+xf[i+3]+xf[i+6]+xf[i+9])/4
+        averVal.append(v)
+    return averVal
+
+
+def exPhizFromBS(*args):
+    text=''
+    result = cmds.promptDialog(
+		title=u'烘焙BS变形目标模型',
+		message=u'请输入前缀后缀,用空格隔开',
+		button=['OK', 'Cancel'],
+		defaultButton='OK',
+		cancelButton='Cancel',
+		dismissString='Cancel')
+
+    if result == 'OK':
+        text = cmds.promptDialog(query=True, text=True)
+    preix,suffix='',''
+    if text:
+        preix=text.split(' ')[0]
+        if ' ' in text:
+            suffix=text.split(' ')[1]
+        sel = cmds.ls(sl=1)
+        for sel_a in sel:
+            con = sorted(cmds.listHistory(sel_a))
+            for con_a in con:
+                if cmds.nodeType(con_a) == 'blendShape':
+                    bsNode = con_a
+                    bsTarGroup=cmds.createNode('transform',n=bsNode+'_exBS')
+                    bsWgtAttrs = cmds.listAttr(bsNode+'.w', m=1)
+                    for bsWgtAttr in bsWgtAttrs:
+                        if  cmds.getAttr(bsNode+'.'+bsWgtAttr,l=1):
+                            continue
+                        plugInfo=cmds.listConnections(bsNode+'.'+bsWgtAttr,c=1,p=1)
+                        if plugInfo:
+                            cmds.disconnectAttr( plugInfo[1],plugInfo[0])
+                        cmds.setAttr(bsNode+'.'+bsWgtAttr, 1)
+                        bsMeshCopy = cmds.duplicate(sel_a)[0]
+                        cmds.parent(bsMeshCopy, bsTarGroup)
+                        cmds.rename(bsMeshCopy, preix+bsWgtAttr+suffix)
+                        cmds.setAttr(bsNode+'.'+bsWgtAttr, 0)
+                        if plugInfo:
+                            cmds.connectAttr( plugInfo[1],plugInfo[0])
+                        # break
+
+
+def jntSetRanColor(*args):
+    sl = cmds.ls(sl=1)[0]
+    index = [2]
+
+    def processJoint(rootJoint):
+        # if index<2:
+        #     index=2
+        index[0] += 1
+        index[0] %= 31
+        print(u'index:', index)
+        ranCol = [random.random(), random.random(), random.random()]
+        cmds.setAttr(rootJoint+'.overrideEnabled', 1)
+        children = cmds.listRelatives(rootJoint, c=1, type='joint')
+        conListA = cmds.listConnections(
+            rootJoint+'.overrideRGBColors', p=1)
+        conListB = cmds.listConnections(rootJoint+'.overrideColorRGB', p=1)
+        if conListA:
+            for conList_A in conListA:
+                cmds.disconnectAttr(
+                    conList_A, rootJoint+'.overrideRGBColors')
+        if conListB:
+            for conList_B in conListB:
+                cmds.disconnectAttr(
+                    conList_B, rootJoint+'.overrideColorRGB')
+        try:
+            cmds.setAttr(rootJoint+'.overrideRGBColors', l=0)
+            cmds.setAttr(rootJoint+'.overrideRGBColors', 0)
+            cmds.select(rootJoint)
+            cmds.setAttr(rootJoint+'.overrideColor', index[0])
+            print(u'设置骨骼{}颜色指数为{}'.format(rootJoint, index[0]))
+        except:
+            try:
+                cmds.setAttr(rootJoint+'.overrideRGBColors', 1)
+                cmds.setAttr(rootJoint+'.overrideColorRGB',
+                             ranCol[0], ranCol[1], ranCol[2])
+                print(u'设置骨骼{}颜色为{}'.format(rootJoint, ranCol))
+            except:
+                print(u'骨骼{}设置rgb颜色失败'.format(rootJoint))
+        if children:
+            for child in children:
+                child_A = cmds.listRelatives(child, c=1, type='joint')
+                if not child_A:
+                    cmds.setAttr(child+'.overrideEnabled', 1)
+                    parentJnt = cmds.listRelatives(child, type='joint', p=1)[0]
+                    parentJntColor = cmds.getAttr(parentJnt+'.overrideColor')
+                    cmds.setAttr(child+'.overrideColor', parentJntColor)
+                else:
+                    processJoint(child)
+
+        print(u'\n')
+    processJoint(sl)
+
+# jntSetRanColor()
+
+
+def getBlendControlDict():
+    blendControlDict = {}
+    blendShapeNode = cmds.ls(type='blendShape')
+    for blendShapeNode_A in blendShapeNode:
+        userAttr = cmds.listAttr(blendShapeNode_A+'.w', m=1)
+        # cmds.select(blendShapeNode_A)
+        for userAttr_A in userAttr:
+            # userAttr_A 有_ 有大小写
+            key = userAttr_A.replace(u'_', '').lower()
+            blendControlDict[key] = (
+                blendShapeNode_A.split(u'_blendShapes')[0], userAttr_A)
+    return blendControlDict
+# print getBlendControlDict()
+
+
+def exPhiz(maxIter=10000):
+    blendControlDict = getBlendControlDict()
+    print(u'blendControlDict:{}'.format(blendControlDict))
+    print(u'----len:{}'.format(len(blendControlDict)))
+    clNode = 'CTRL_expressions'
+    outPort = cmds.listAttr(clNode, ud=1)
+    print(outPort)
+    exPath = r'E:\BUG_Project\B014\reference\chars\XiaoYang\MetaHumanPhiz'
+    exPath = exPath.replace(u'\\', '/')
+    for index, outPort_A in enumerate(outPort):
+        if index > maxIter:
+            break
+        try:
+            exNode = blendControlDict[outPort_A.lower()][0]
+            ctrlName = blendControlDict[outPort_A.lower()][1]
+        except:
+            continue
+        inputAttrList = clNode+'.'+outPort_A
+        inputNodeAttr = cmds.listConnections(inputAttrList, p=1, s=1, d=0)[0]
+        cmds.select(inputNodeAttr)
+        print(inputAttrList, inputNodeAttr)
+        cmds.disconnectAttr(inputNodeAttr, inputAttrList)
+        cmds.setAttr(clNode+'.'+outPort_A, 1)
+        exFile = exPath+'/'+exNode+'___'+ctrlName+'.obj'
+        cmds.select(exNode)
+        cmds.file(exFile, force=1, options="groups=1;ptgroups=1;materials=0;smoothing=1;normals=1", typ="OBJexport",
+                  pr=1, es=1)
+        cmds.setAttr(clNode+'.'+outPort_A, 0)
+        cmds.connectAttr(inputNodeAttr, inputAttrList)
+        # break
+
+
+'''
+import sys
+sys.path.append(r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig')
+try:
+    reload (Rig)
+except:
+    import Rig
+Rig.exPhiz()
+'''
+
+# 给新的初始模型添加Orgi形态节点
+
+
+def genOrgiShapeFunc(newTrNode='pSphere1', oriTrNode='pSphere3'):
+    newShapeNode = cmds.listRelatives(newTrNode, s=1)[0]
+    oriShapeNode = cmds.listRelatives(oriTrNode, s=1)[0]
+    oriOrgiNode = cmds.listRelatives(oriTrNode, s=1)[1]
+    copyNewTrNode = cmds.duplicate(newShapeNode)
+    copyNewShapeNode = cmds.listRelatives(copyNewTrNode, s=1)[0]
+    nameNewShapeNode = cmds.rename(copyNewShapeNode, newShapeNode+'Orig')
+    cmds.setAttr(nameNewShapeNode+'.visibility', 0)
+    cmds.parent(nameNewShapeNode, newTrNode, s=1, add=1)
+    cmds.delete(copyNewTrNode)
+    return oriShapeNode, newShapeNode, oriOrgiNode, nameNewShapeNode
+    # 返回原始形态节点,新的形态节点,原始Orgi节点,新的Orgi节点
+
+
+def transBlend(newTrNode='pSphere1', oriTrNode='pSphere3'):
+    genOrgiShape = genOrgiShapeFunc(newTrNode, oriTrNode)
+    # 获取原始形态节点的inMesh输出选项
+    outMeshNode = cmds.listConnections(genOrgiShape[0]+'.inMesh', p=1, d=0)[0]
+    # his=cmds.listHistory(genOrgiShape[0]+'.inMesh')
+    # for his_A in  his:
+    #     if  cmds.nodeType(his_A)=='blendShape':
+    #         blendNode=his_A
+    # print (u'--{}--连接的Blend节点是--{}'.format(genOrgiShape[0],blendNode))
+    # 连接outMeshNode的到新的形态节点的inMesh
+    cmds.connectAttr(outMeshNode, genOrgiShape[1]+'.inMesh', f=1)
+    # 获取原始模型的变形初始形态节点的worldMesh输出接口:groupPartNode.inputGeometry
+    groupPartNode = cmds.listConnections(
+        genOrgiShape[2]+'.worldMesh', p=1, s=0)[0]
+    # 连接新的模型初始形态节点的.inMesh端口到
+    cmds.connectAttr(genOrgiShape[3]+'.worldMesh[0]', groupPartNode, f=1)
+
+
+'''
+import sys
+sys.path.append(r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig')
+try:
+    reload (Rig)
+except:
+    import Rig
+Rig.transBlend(u'NewMesh_head_lod0_mesh','head_lod0_mesh')
+'''
+
+
+def key_CTRL_expressions(*args):
+    clNode = 'CTRL_expressions'
+    cmds.select(clNode)
+    outPort = cmds.listAttr(clNode, ud=1)
+    print(outPort)
+    exPath = r'E:\BUG_Project\B014\reference\chars\XiaoYang\MetaHumanPhiz'
+    exPath = exPath.replace(u'\\', '/')
+    for index, outPort_A in enumerate(outPort):
+        cmds.currentTime(index+1)
+        # cmds.setAttr(clNode+'.'+outPort_A,1)
+        cmds.setKeyframe(clNode, v=1, at=outPort_A)
+        cmds.setKeyframe(clNode, v=0, at=outPort[index+1])
+        if index > 0:
+            # cmds.setAttr(clNode+'.'+outPort[index-1],0)
+            cmds.setKeyframe(clNode, v=0, at=outPort[index-1])
+
+
+def autoWrapObj(staticMeshTr, deformModelTr):  # 没有规则时先选择静态网格,再选择变形物体
+    cmds.loadPlugin('nearestPointOnMesh.mll')
+    if not staticMeshTr:
+        sel = cmds.ls(sl=1)
+        staticMeshTr = sel[0]  # 'groupeyelashes_lod0_mesh'
+        deformModelTr = sel[1]
+    staticMeshshape = cmds.listRelatives(staticMeshTr, s=1)[0]
+    copydeformModelTr = cmds.duplicate(
+        deformModelTr, n=deformModelTr+'_'+staticMeshTr)[0]
+    print(u'静态物体是:{}'.format(staticMeshTr))
+    allPoint = cmds.ls(staticMeshshape+'.vtx[*]', fl=1)
+    nearFaceList = []
+    pointAmount = len(allPoint)
+    step = pointAmount/300+1
+    for index in range(0, pointAmount, step):
+        pos = cmds.xform(allPoint[index], q=1, t=1, ws=1)
+        nearNode = cmds.nearestPointOnMesh(copydeformModelTr, ip=pos)
+        nearFaceIndex = cmds.getAttr(nearNode+'.nearestFaceIndex')
+        print(deformModelTr, '---------------')
+        xf = cmds.xform(u'{}.f[{}]'.format(
+            deformModelTr, nearFaceIndex), q=1, t=1, ws=1)
+        print(xf, nearFaceIndex, staticMeshTr)
+        averPos = getAverVal(xf)
+        dis = LMath.dis(pos, averPos)
+        print(u'distance is {}:'.format(dis))
+        if dis < 0.3:
+            nearFaceList.append(copydeformModelTr +
+                                '.f[{}]'.format(nearFaceIndex))
+        cmds.delete(nearNode)
+    nearFaceList = list(set(nearFaceList))
+    cmds.select(nearFaceList)
+    # mm.eval(u'PolySelectTraverse -1'
+    print(u'最近的数量{},为{}'.format(len(nearFaceList), cmds.ls(sl=1)))
+    cmds.select(copydeformModelTr+'.f[*]', tgl=True)
+    # cmds.InvertSelection()
+    # cmds.error(u'----------')
+    cmds.delete()
+
+    copydeformModelTrShape = cmds.listRelatives(
+        copydeformModelTr, s=1)  # 复制出来的片
+    # cmds.select(copydeformModelTrShape[1:])
+    # cmds.delete()
+    cmds.select(copydeformModelTr)
+    cmds.DeleteHistory()
+    cmds.select(deformModelTr, add=1)
+    # worpNode=cmds.deformer(type='wrap')[0]
+    # cmds..connectAttr(copydeformModelTr + '.worldMatrix[0]', wrapNode + '.geomMatrix')
+    worpNode = mm.eval(
+        'doWrapArgList "7" { "1","0","1", "2", "0", "1", "0", "0" }')
+    cmds.select(staticMeshTr)
+    cmds.select(copydeformModelTr, add=1)
+    worpNode = mm.eval(
+        'doWrapArgList "7" { "1","0","1", "2", "0", "1", "0", "0" }')
+    cmds.setAttr(copydeformModelTr+'.visibility', 0)
+
+
+def autodeformModel_XNH(*args):
+    nameRuleDict = orgiNameRuleDict.copy()
+    print(u'nameRuleDict:', nameRuleDict)
+    deformObj = nameRuleDict['deformObj']
+    print(u'deformObj:', deformObj)
+
+    nameRuleDict.pop(u'deformObj')
+    staticObjDict = nameRuleDict
+    print(u'staticObjDict:', staticObjDict)
+    sel = cmds.ls(sl=1)
+    for staticObj in staticObjDict.values():
+        if cmds.objExists(staticObj):
+            if staticObj not in sel:
+                continue
+            if cmds.getAttr(staticObj+'.visibility'):
+                print(u'物体可见性--{}'.format(cmds.getAttr(staticObj+'.visibility')))
+                print(u'staticObj, deformObj:', staticObj, deformObj)
+                autoWrapObj(staticObj, deformObj)
+                print(u'\n')
+                
+def autodeformModel(*args):
+    #自动包裹模型
+    sel = cmds.ls(sl=1)
+    #autoWrapObj(staticObj, deformObj)
+    autoWrapObj(sel[0], sel[1])
+    print(u'\n')
+
+
+def createBS_XHN(*args):
+    import json
+    jsonFile = r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig\XNH_nameRule.json'
+    with open(jsonFile, 'r') as f:
+        BS_dict = json.load(f)
+    headBS = 'head_mesh_blendShapes'
+    BS_dict.pop(headBS)
+    sel = cmds.ls(sl=1)
+    for bs, bsShape in BS_dict.items():
+        smObj = bs.split(u'_blendShapes')[0]
+        if smObj not in sel:
+            continue
+        if not cmds.objExists(smObj):
+            continue
+        elif not cmds.getAttr(smObj+'.visibility'):
+            continue
+        bsGroup = cmds.createNode(u'transform', n=smObj+'BSGroup')
+        cmds.setAttr(bsGroup+'.visibility', 0)
+        bsNode = cmds.blendShape(smObj, n=bs)[0]
+        print(u'bsNode', bsNode)
+        for index, bsTarName in enumerate(bsShape):
+            cmds.setAttr(headBS+'.'+bsTarName, 1)
+            smObj_Copy = cmds.duplicate(smObj, n=smObj+'_bs')[0]
+            clearShapeNode(smObj_Copy)
+            cmds.parent(smObj_Copy, bsGroup)
+            cmds.blendShape(bsNode, edit=True, t=(
+                smObj, index, smObj_Copy, 1), w=(index, 0))
+            cmds.aliasAttr(bsTarName, bsNode+'.w[{}]'.format(index))
+            cmds.setAttr(headBS+'.'+bsTarName, 0)
+
+
+def exportBSRule():
+    import json
+    bsNameRuleDict = {}
+    jsonFile = r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig\XNH_nameRule.json'
+    for blendShape_a in blendShapes:
+        if ':' in blendShape_a:
+            blendShapeName = blendShape_a.split(u':')[1]
+            print(blendShapeName)
+            bsAttrs = cmds.listAttr(blendShape_a+'.w', m=1)
+            bsNameRuleDict[blendShapeName] = bsAttrs
+    with open(jsonFile, "w") as f:
+        json.dump(bsNameRuleDict, f)
+
+
+def clearShapeNode(obj):
+    sh = cmds.listRelatives(obj, s=1)[1:]  # 复制出来的片
+    for x in sh:
+        try:
+            cmds.select(x)
+            cmds.delete()
+        except:
+            pass
+
+
+def XNH_NameRule(*args):
+    import functools
+    import maya.cmds as cmds
+    if cmds.control(u'XNH_NameRule', q=1, ex=1):
+        cmds.deleteUI(u'XNH_NameRule')
+    cmds.window(u'XNH_NameRule', w=500, h=200)
+    cmds.rowColumnLayout(u'XNH_NameRule_L', adj=2,
+                         numberOfColumns=2, w=500, h=150)
+
+    def renameSel(newName, *argvs):
+        sel = cmds.ls(sl=1)[0]
+        print(sel)
+        cmds.rename(sel, newName)
+    index = 0
+    for mod, ctrl in orgiNameRuleDict.items():
+        cmds.rowColumnLayout(u'XNH_NameRule_L', e=1)
+        index += 1
+        if mod == 'deformObj':
+            mod = 'head'
+        cmds.text(mod+'ui', l=mod+'--'+ctrl)
+        cmds.button(c=functools.partial(renameSel, ctrl),
+                    l=u'重命名为{}'.format(ctrl))
+    cmds.showWindow(u'XNH_NameRule')
+
+
+def delNodeByTp(nodeTp='blendShapes'):
+    sel = cmds.ls(sl=1)
+    for sel_a in sel:
+        sh = cmds.listRelatives(sel_a, s=1)[0]
+        con = cmds.listConnections(sh)
+        for con_a in con:
+            if cmds.objExists(con_a):
+                if cmds.nodeType(con_a) == nodeTp:
+                    cmds.delete(con_a)
+
+
+def delOutput(*args):
+    sel = cmds.ls(sl=1)
+    print(sel)
+    for sel_a in sel:
+        shs = cmds.listRelatives(sel_a, s=1)
+        for sh in shs:
+            con = cmds.listConnections(sh+'.worldMesh', s=0, d=1)
+            print(u'{}连接的节点是:{}'.format(sel_a, con))
+            if con:
+                for con_a in con:
+                    if cmds.objExists(con_a):
+                        cmds.delete(con_a)
+
+
+def setBsWeightTo0(*args):
+    sel = cmds.ls(sl=1)
+    for sel_a in sel:
+        bsNodes=l_usual.listHisNodeByType(nodeName=sel_a,nodeType='blendShape')
+        for bsNode in bsNodes:
+            weightAttrs = cmds.listAttr(bsNode+'.w', m=1)
+            for weightAttr in weightAttrs:
+                cmds.setAttr(bsNode+'.'+weightAttr, 0)
+
+
+def setDrvKeyFra(*args):
+    nameRuleDict = orgiNameRuleDict.copy()
+    ctlNode = 'CTL_expressions'
+    print(u'nameRuleDict:', nameRuleDict)
+    deformObj = nameRuleDict['deformObj']
+    print(u'deformObj:', deformObj)
+    sel = cmds.ls(sl=1)
+    if not sel:
+        selRange = nameRuleDict.values()
+    else:
+        selRange = sel
+    for staticObj in selRange:
+        print(u'对模型{}的BlendShape设置驱动关键帧'.format(staticObj))
+        if not cmds.objExists(staticObj):
+            continue
+        bsNode = staticObj+'_blendShapes'
+        weiAttrs = cmds.listAttr(bsNode+'.w', m=1)
+        for weiAttr in weiAttrs:
+            try:
+                drvKey = cmds.setDrivenKeyframe(bsNode+'.'+weiAttr, cd=ctlNode+'.'+weiAttr,
+                                                ott="linear", itt="linear", dv=0, v=0)
+                drvKey = cmds.setDrivenKeyframe(bsNode+'.'+weiAttr, cd=ctlNode+'.'+weiAttr,
+                                                ott="linear", itt="linear", dv=1, v=1)
+            except:
+                print("ctlNode+'.'+weiAttr:", ctlNode+'.'+weiAttr)
+        cmds.keyTangent(bsNode+'.'+weiAttr, e=1, wt=1)
+
+
+def delKeyFra(*args):
+    mySel = cmds.ls(sl=1)
+    test = []
+    try:
+        test += cmds.listConnections(mySel, s=True, type="animCurveTU")
+    except:
+        pass
+    try:
+        test += cmds.listConnections(mySel, s=True, type="animCurveTL")
+    except:
+        pass
+    try:
+        test += cmds.listConnections(mySel, s=True, type="animCurveTA")
+    except:
+        pass
+    cmds.delete(test)
+
+
+def createCtlNode(*args):
+    ctlShapeNode = cmds.createNode(u'locator', n='CTL_expressionsShape')
+    par = cmds.listRelatives(ctlShapeNode, p=1)
+    ctlNode = cmds.rename(par, 'CTL_expressions')
+    cmds.setAttr(ctlNode+'.rx', k=0)
+    cmds.setAttr(ctlNode+'.ry', k=0)
+    cmds.setAttr(ctlNode+'.rz', k=0)
+    cmds.setAttr(ctlNode+'.tx', k=0)
+    cmds.setAttr(ctlNode+'.ty', k=0)
+    cmds.setAttr(ctlNode+'.tz', k=0)
+    cmds.setAttr(ctlNode+'.sx', k=0)
+    cmds.setAttr(ctlNode+'.sy', k=0)
+    cmds.setAttr(ctlNode+'.sz', k=0)
+    cmds.setAttr(ctlNode+'.visibility', k=0)
+    jsonFile = r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig\XNH_Ctl_Parm.json'
+    with open(jsonFile, 'r') as f:
+        ctlParm_dict = eval(f.read())
+    ctlParm_list = sorted(ctlParm_dict.keys())
+    print(ctlParm_list)
+    for ctlParm in ctlParm_list:
+        value = ctlParm_dict[ctlParm]
+        print(ctlParm)
+        try:
+            cmds.addAttr(ctlNode, at=str(value[1]), ln=ctlParm, max=1, min=0)
+            cmds.setAttr(ctlNode+'.'+ctlParm, value[0], cb=1, k=1)
+            cmds.setAttr(ctlNode+'.'+ctlParm, k=1)
+            print(u'------------')
+        except:
+            print(ctlParm, value)
+    cmds.select(ctlNode)
+
+
+def copyParm():
+    sys.path.append(
+        r'S:\DataTrans\FQQ\plug_in\python\Python27\Lib\site-packages')
+    node = 'CTL_expressions'
+    attrList = cmds.listAttr(node, ud=1)
+    attrDict = {}
+    for attr in attrList:
+        attrValue = cmds.getAttr(node+'.'+attr)
+        attrTyp = cmds.getAttr(node+'.'+attr, typ=1)
+        attrDict[attr] = (attrValue, attrTyp)
+
+    pyperclip.copy(str(attrDict))
+
+
+def modifyNameRecursion(parNode='jaw'):
+    import time
+    st = time.time()
+    indexList = [0]
+    localConInNode = cmds.createNode(u'transform', n=parNode+'InControl')
+    localConOutNode = cmds.createNode(u'transform', n=parNode+'OutControl')
+
+    def modifyName(nodeName):
+        nodeInputs = cmds.listConnections(nodeName, p=1, c=1, d=0)
+        for index in range(0, len(nodeInputs), 2):
+            inputNodePlug = nodeInputs[index+1].split(u'.')[1]
+            inputNodeName = nodeInputs[index+1].split(u'.')[0]
+            inputNodeTy = cmds.nodeType(inputNodeName)
+
+            curNodeNameWithPlug = nodeInputs[index]
+            curNodeName = nodeInputs[index].split(u'.')[0]
+            curNodeTy = cmds.nodeType(curNodeName)
+            curNodePlug = nodeInputs[index].split(u'.')[1]
+            if inputNodeName == 'CTL_expressions':
+                print(u'输入节点为CTL_expressions')
+                if not cmds.attributeQuery(inputNodePlug, n=localConInNode, ex=1):
+                    cmds.addAttr(localConInNode, at='float', ln=inputNodePlug)
+                cmds.connectAttr(localConInNode+'.' +
+                                 inputNodePlug, curNodeNameWithPlug, f=1)
+            if curNodeName == parNode:
+                print(u'输入节点为', parNode)
+                if not cmds.attributeQuery(inputNodePlug, n=localConInNode, ex=1):
+                    cmds.addAttr(localConInNode, at='float', ln=inputNodePlug)
+                cmds.connectAttr(localConInNode+'.' +
+                                 inputNodePlug, curNodeNameWithPlug, f=1)
+
+            if inputNodeTy == 'joint' or inputNodeTy == 'transform':
+                continue
+
+            if time.time()-st > 50:
+                break
+            if '[' in curNodePlug:
+                curNodePlug = curNodePlug.split(u'[')[
+                    0]+'_'+curNodePlug.split(u'[')[1][:-1]
+                print(u'带序号的接口是--', curNodePlug)
+            print(curNodeTy+'_'+inputNodePlug, u'输入节点类型加接口')
+            print(curNodeName, u'当前节点名称')
+            print(curNodePlug, u'当前节点接口')
+            # 当前节点名称去除__
+            curNodeName = curNodeName.split(u'__')[0]
+            print(u'当前节点名称去除__后是:', curNodeName)
+            newName = curNodeTy+'_'+inputNodePlug + '__'+curNodeName+'_'+curNodePlug
+            print('新的名称是:', newName)
+            inputNodeNewName = cmds.rename(inputNodeName, newName)
+            cmds.select(inputNodeNewName)
+            inputNodeNewName_Con = cmds.listConnections(
+                inputNodeNewName, p=1, c=1, d=0)
+            if inputNodeNewName_Con:
+                indexList[0] += 1
+                print(inputNodeNewName, 'inputNodeNewName')
+                print(indexList, 'indexList')
+                print(inputNodeNewName_Con, 'inputNodeNewName_Con')
+                print('\n', index)
+                modifyName(inputNodeNewName)
+    modifyName(parNode)
+
+
+def matchBSName(*args):
+    # 你需要选择有BS输入的模型
+    sel = cmds.ls(sl=1)
+    for sel_a in sel:
+        con = sorted(cmds.listHistory(sel_a))
+        for con_a in con:
+            if cmds.nodeType(con_a) == 'blendShape':
+                bsNode = con_a
+                print(u'你选择的物体是:{}'.format(sel_a))
+                print(u'blendshape节点是是:{}'.format(bsNode))
+                attrList = cmds.listAttr(bsNode+'.w', m=1)
+                conObjList = cmds.listConnections(bsNode+'.inputTarget')
+                for index, attr in enumerate(attrList):
+                    try:
+                        if not cmds.attributeQuery(conObjList[index].split('|')[-1], n=bsNode, ex=1):
+                            cmds.aliasAttr(conObjList[index].split(
+                                '|')[-1], bsNode+'.'+attr)
+                    except:
+                        pass
+
+
+
+        
+        
+def seleyeCtl(*args):
+    import codecs,functools
+    eyeCtlJsonFile=r'S:\DataTrans\FQQ\plug_in\Lugwit_plug\mayaPlug\l_scripts\Rig\MH_eyeCtlList.json'
+    with codecs.open(eyeCtlJsonFile,'r') as eyeCtlJsonFile_open:
+        eyeCtlList=eyeCtlJsonFile_open.read().replace(r'\r\n','')
+        eyeCtlList=eval(eyeCtlList)
+        print (eyeCtlList)
+    def selObj(obj,*argvs):
+        cmds.select(obj,r=1)
+    if cmds.control('eyeCtlWin',q=1,ex=1):
+        cmds.showWindow('eyeCtlWin')
+    else:
+        cmds.window('eyeCtlWin')
+        cmds.rowColumnLayout(adj=1,nc=2)
+        for i in range(0,len(eyeCtlList),2):
+            value=eyeCtlList[i+1].decode('utf-8')
+            key=eyeCtlList[i].replace('locatorCTL_','')
+            cmds.button(label=u'选中'+value,c=functools.partial(selObj,eyeCtlList[i]))
+            jntName=eyeCtlList[i].replace('locatorCTL_','DHIhead:')
+            cmds.button(label=u'选中'+key,c=functools.partial(selObj,jntName))
+        cmds.showWindow()
+
+def replaceDeformOri(*args):
+    sl=pm.ls(sl=1)
+    oriMesh=sl[0]
+    tarMesh=sl[1]
+    oriMeshShape_1=oriMesh.getShapes()[1]
+    oriMeshShape_1=pm.rename(oriMeshShape_1,oriMeshShape_1+'_temp')
+    #获取groupPart节点及属性
+    GroupParts=oriMeshShape_1.worldMesh[0].outputs(p=1)[0]
+    # 复制目标物体作为新的变形源
+    tarMesh_copyAsOrgi=pm.duplicate(tarMesh,n=oriMesh+'_NewOrgi')[0];
+    tarMesh_copyAsOrgiShape=tarMesh_copyAsOrgi.getShape()
+    #复制新的变形源到原始物体的变换节点
+    pm.parent(tarMesh_copyAsOrgiShape,oriMesh,add=1,s=1)[0]
+    #连接目标物体的形态节点和groupPart节点
+    tarMesh_copyAsOrgiShape.worldMesh[0].connect(GroupParts,f=1)
+    pm.select(oriMeshShape_1)
+    pm.delete(oriMeshShape_1)
+    tarMesh_copyAsOrgiShape.intermediateObject.set(1)
+    
+
+def reBind(useNewMesh,*args):
+    #cmds.inViewMessage( amg=u'<hl><font size="10">请先选择已经绑好的物体,再选择要目标物体</hl>', pos='midCenter', fade=True )
+    import os,sys
+    sl=pm.ls(sl=1)
+    oriMesh=sl[0]
+    if useNewMesh:
+        tarMesh=sl[1]
+        pm.polyTransfer(tarMesh,uv=1,ao=oriMesh)
+    else:
+        tarMesh=pm.duplicate(oriMesh,n=oriMesh+'_tarMesh')[0]
+    oriMeshShape_1=oriMesh.getShapes()[1]
+    # 传递UV
+    oriMeshShape=oriMesh.getShape()
+    bindJnt=pm.listHistory(oriMeshShape,type='joint')
+    pm.select(tarMesh)
+    cmds.DeleteHistory()
+    #复制一个目标物体与骨骼绑定存储权重信息
+    tarMesh_copyAsWgtSource=pm.duplicate(tarMesh,n=oriMesh+'_WgtBackup')[0]
+
+    skNode=pm.skinCluster( bindJnt,tarMesh_copyAsWgtSource.getShape(),omi=1,mi=12)
+
+    #GroupParts=str(GroupParts)
+    # 复制目标物体作为新的变形源
+    tarMesh_copyAsOrgi=pm.duplicate(tarMesh,n=oriMesh+'_NewOrgi')[0];
+    #清除点历史
+    try:
+        pm.makeIdentity(tarMesh, apply=True, t=1, r=1, s=0, n=0)
+    except:
+        pass
+    pm.select(tarMesh)
+    pm.runtime.ConformPolygonNormals()
+    #旧的绑定节点
+    oldSKNode=pm.listHistory(oriMeshShape,type='skinCluster')[0]
+    #复制绑定信息
+    pm.copySkinWeights(ss=oldSKNode, ds=skNode, surfaceAssociation='closestPoint', uvSpace=['map1', 'map1'],
+                    influenceAssociation=['oneToOne', 'oneToOne', 'oneToOne'],nm=1)
+
+    # 删除绑定信息
+    pm.skinCluster(oriMesh, edit=True, unbind=True)
+    #复制新的变形源到原始物体的变换节点
+    tarMesh_copyAsOrgiShape=pm.parent(tarMesh_copyAsOrgi.getShape(),oriMesh,add=1,s=1)[0]
+    #重新绑定模型
+    skDS = pm.skinCluster( bindJnt,oriMeshShape,omi=1,mi=12)
+    #获取变形源连接的节点GroupParts以及属性
+    GroupParts=oriMeshShape_1.worldMesh[0].outputs(p=1)[0]
+    #连接新的变形源
+    tarMesh_copyAsOrgiShape.worldMesh[0].connect(GroupParts,f=1)
+    tarMesh_copyAsOrgiShape.intermediateObject.set(1)
+
+    # 复制会权重信息
+    pm.copySkinWeights(ss=skNode, ds=skDS, surfaceAssociation='closestPoint', uvSpace=['map1', 'map1'],
+                        influenceAssociation=['oneToOne', 'oneToOne', 'oneToOne'],nm=1)
+    # 临时物体打组并隐藏,
+    tarMesh.visibility.set(0)
+    tarMesh_copyAsWgtSource.visibility.set(0)
+    print (u'隐藏目标物体备份:{}'.format(tarMesh_copyAsOrgi))
+    tarMesh_copyAsOrgi.visibility.set(0)
+    tempNode=pm.createNode('transform',n=oriMesh+'_replaceSkinTempObj')
+    pm.parent(tarMesh,tempNode)
+    pm.parent(tarMesh_copyAsWgtSource,tempNode)
+    pm.parent(tarMesh_copyAsOrgi,tempNode)
+    pm.select(oriMeshShape_1)
+    pm.delete(oriMeshShape_1)
+    
+def selectRelativeJnts(*args):
+    import os,sys
+    sl=cmds.ls(sl=1)
+    oriMesh=sl[0]
+    oriMeshShape=oriMesh.getShape()
+    #tarMesh=sl[1]
+    jnts=cmds.listHistory(oriMeshShape,type='joint')
+    cmds.select(jnts)
+
+def symJntTransform(*args):
+    rootJoint=cmds.ls(sl=1)[0]
+    cldJnts=[rootJoint]+cmds.listRelatives(rootJoint,ad=1)
+    attrList=['tx','ty','tz','rx','ry','rz','sx','sy','sz','translate','scale','rotate']
+    attrList=['rx','ry','rz','rotate']
+    for cldJnt in cldJnts:
+        if '_l_' in cldJnt:
+            for attr in attrList:
+                if not cmds.listConnections(cldJnt+'.'+attr,d=0):
+                    attrValue=cmds.getAttr(cldJnt+'.'+attr)
+                    newJnt=cldJnt.replace('_l_','_r_')
+                    attrName=newJnt+'.'+attr
+                    sym=-1
+                    if 'foot' in newJnt:
+                        sym=1
+                        # cmds.error ("'foot' in newJnt---",'foot' in newJnt)
+                    try:
+                        if isinstance(attrValue,float):
+                            cmds.setAttr(newJnt+'.'+attr,attrValue)
+                        else:
+                            x,y,z=attrValue[0][0],attrValue[0][1],attrValue[0][2]
+                            cmds.setAttr(newJnt+'.'+attr,x,y,z)
+                    except:
+                        print (u'物体{}设置属性{}失败'.format(newJnt,attrName))
+        #break
+
+def addAmplitudeAttribute(*args):        
+    ctls=cmds.listRelatives('GRP_faceGUI',ad=1,type='transform')
+    #ctls=['CTRL_L_mouth_lipSticky']
+    for ctl in ctls:
+        if ctl.startswith('CTRL'):
+            for i in range(3):
+                con=cmds.listConnections(ctl+'.t'+'xyz'[i],s=0,c=1,p=1)
+                print (con)
+                if 'multiplyDivide' in str(con):
+                    continue
+                if  con:
+                    index=0
+                    for j in range(0,len(con),2):
+                        out=con[j]
+                        input=con[j+1]
+                        #print out,input
+                        attrName=con[j].split('.')[-1]
+                        #给表情控制器添加幅度属性
+                        AmplitudeAttrName='Amplitude_'+attrName
+                        cmds.select(ctl)
+                        #查询幅度属性时候存在
+                        if not cmds.attributeQuery(AmplitudeAttrName,ex=1,n=ctl):
+                            cmds.addAttr(longName=AmplitudeAttrName,at='float',smn=0,smx=1,dv=1,h=0)
+                        #设置属性在通道盒可见
+                        cmds.setAttr(ctl+'.'+AmplitudeAttrName,cb=1)
+                        #创建一个乘除节点
+                        mdNode=cmds.createNode('multiplyDivide')
+                        if index>2:
+                            #如果这个属性连接的节点大于三个,创建一个新的乘除节点
+                            mdNode=cmds.createNode('multiplyDivide')
+                            index%=3
+                        #连接表情控制器的输出到乘除节点
+                        cmds.connectAttr(out,mdNode+'.input1'+'XYZ'[index],f=1)
+                        #连接幅度控制器的输出到程度节点
+                        cmds.connectAttr(ctl+'.'+AmplitudeAttrName,mdNode+'.input2'+'XYZ'[index],f=1)
+                        #连接乘除节点到r4节点
+                        cmds.connectAttr(mdNode+'.output'+'XYZ'[index],input,f=1)
+                        
+                        # print index
+                        # print out,mdNode+'.input1'+'XYZ'[index]
+                        # print ctl+'.'+AmplitudeAttrName,mdNode+'.input2X'
+                        # print mdNode+'.output'+'XYZ'[index],input
+                        # print ('\n')
+                        index+=1
+                        
+def removeAmplitudeAttribute(*args):        
+    ctls=cmds.listRelatives('GRP_faceGUI',ad=1,type='transform')
+    #ctls=['CTRL_L_mouth_lipSticky']
+    for ctl in ctls:
+        if ctl.startswith('CTRL'):
+            cmds.select(ctl)
+            for i in range(3):
+                con=cmds.listConnections(ctl+'.t'+'xyz'[i],s=0,c=1,p=1)
+                print (con)
+                if  con:
+                    for j in range(0,len(con),2):
+                        out=con[j]
+                        input=con[j+1]
+                        if 'multiplyDivide' in input:
+                            #print out,input
+                            out_NodeName=input.split('.')[0]
+                            #给表情控制器添加幅度属性
+                            ctlAttrList=cmds.listAttr(ctl)
+                            for attr in ctlAttrList:
+                                if attr.startswith('Amplitude_'):
+                                    cmds.deleteAttr(at=attr,n=ctl)
+                            #获取节点连接的属性,一般连接的是一个驱动关键帧节点
+                            exNodeAttr=cmds.listConnections(out_NodeName,s=0,p=1)[0]
+                            # 连接控制器的输出属性和驱动关键帧节点的输入属性
+                            cmds.connectAttr(out,exNodeAttr,f=1)
+                            # 删除乘除节点
+                            cmds.delete(out_NodeName)
+
+                        
+def replaceBSTarget(*args):
+    bsList=l_usual.listHisNodeByType( nodeList=cmds.ls(sl=1),nodeType='blendShape')
+    for bs in bsList:
+        wgtAttrs=cmds.listAttr(bs+'.w',m=1)
+        for index,wgtAttr in enumerate(wgtAttrs):
+            if cmds.objExists('Fix_'+wgtAttr):
+                inputGeomTarget=bs+'.inputTarget[0].inputTargetGroup[{}].inputTargetItem[6000].inputGeomTarget'.format(index)
+                shape=cmds.listRelatives('Fix_'+wgtAttr,s=1)[0]
+                cmds.connectAttr(shape+'.worldMesh[0]',inputGeomTarget,f=1)
+        #pSphereShape1.worldMesh[0]  blendShape1.inputTarget[0].inputTargetGroup[0].inputTargetItem[6000]'.
+#con=cmds.listConnections(cmds.ls(sl=1)[0]+,s=0,c=1,p=1)
+
+    #con=cmds.listConnections(cmds.ls(sl=1)[0]+,s=0,c=1,p=1)
+    
+def aa():
+    attr='DHIhead:FACIAL_C_FacialRoot.tx'
+    inputList=[]
+    def lc(attr):
+        inputAttr=cmds.listConnections(attr,d=0)
+        if inputAttr:
+            inputList.append(inputAttr[0])
+            print (inputList)
+            lc(inputAttr)
+        return inputList
+
+    from maya import cmds
+    objName='FACIAL_C_FacialRoot'
+    attrName='tx'
+    cmds.createEmbeddedNodeRL4(
+    n="rigLogicNode", 
+    dfp="S:/DataTrans/FQQ/givetoother/Bernice_rl.dna", 
+    jn="DHIhead:{}.{}".format(objName,attrName), 
+    amn="FRM_WMmultipliers.{}_{}".format(objName,attrName), 
+    bsn="{}_blendShapes.{}".format(objName,attrName), 
+    cn="{}.{}".format(objName,attrName)
+    )
+    help(cmds.createEmbeddedNodeRL4)
+    
+def aa():
+    tarMesh='mouth_funnel_ULGood'
+    oriMesh='head_lod0_mesh_T'
+    BadMesh='mouth_funnel_ULFix'
+    baseMesh='head_lod0_mesh'
+    bsNode = cmds.blendShape(BadMesh, n=BadMesh+'bs')[0]
+    baseBsNode=cmds.listHistory(baseMesh,type='blendShape')[0]
+    cmds.blendShape(bsNode, edit=True, t=(
+                    BadMesh, 0, oriMesh, 1), w=(0, 1))
+    cmds.blendShape(bsNode, edit=True, t=(
+                    BadMesh, 1, tarMesh, 1), w=(1, 1))
+    baseBsCount=baseBsNode.getWeightCount()
+    cmds.blendShape(baseBsNode, edit=True, t=(
+                    baseMesh, baseBsCount, BadMesh, 1), w=(baseBsCount, 1))
+    
+def switchBS(*args):
+    sl=cmds.selected()
+    printDict={0:u'关闭blendShape',1:u'打开blendShape'}
+    for s in sl:
+        bsNode=cmds.listHistory(s,type='blendShape')[0]
+        getNodeState=cmds.getAttr(bsNode+'.nodeState') #比如说状态为正常,值为0
+        cmds.setAttr(bsNode+'.nodeState',1-getNodeState) # 设置为1,关闭BS
+        cmds.warning (printDict[getNodeState]) #打印BS已关闭
+        
+def remapVtx():
+    import os,sys
+    sl=cmds.selected()
+    headVtxList=[5712,11389,23689,2641,17431,20676]
+    vtxList=[]
+    vtxList.append(sl[0].vtx[headVtxList[0]])
+    vtxList.append(sl[0].vtx[headVtxList[1]])
+    vtxList.append(sl[0].vtx[headVtxList[2]])
+    vtxList.append(sl[1].vtx[headVtxList[3]])
+    vtxList.append(sl[1].vtx[headVtxList[4]])
+    vtxList.append(sl[1].vtx[headVtxList[5]])
+    cmds.meshRemap(vtxList[0],vtxList[1],vtxList[2],vtxList[3],vtxList[4],vtxList[5])
+    
+def fixBS():
+    tarMesh=cmds.selected()[0]#....Good
+    oriMesh='head_lod0_mesh_T'
+    BadMesh=cmds.selected()[1]#....Fix
+    baseMesh='head_lod0_mesh'
+    bsNode = cmds.blendShape(BadMesh, n=BadMesh+'bs')[0]
+    baseBsNode=cmds.listHistory(baseMesh,type='blendShape')[0]
+    cmds.blendShape(bsNode, edit=True, t=(
+                    BadMesh, 0, oriMesh, 1), w=(0, 1))
+    cmds.blendShape(bsNode, edit=True, t=(
+                    BadMesh, 1, tarMesh, 1), w=(1, 1))
+    baseBsCount=baseBsNode.getWeightCount()
+    cmds.blendShape(baseBsNode, edit=True, t=(
+                    baseMesh, baseBsCount, BadMesh, 1), w=(baseBsCount, 1))
+    
+def selJointByPoint():
+    import os,sys
+    #获取选择的顶点
+    jnts=[]
+    verts = cmds.selected()
+    for vert in verts:
+        #获取顶点的网格
+        mesh = vert.node()
+        #获取网格的绑定
+        sc = mesh.listHistory(type='skinCluster')[0]
+        #获取网格的所有骨骼
+        infs = sc.influenceObjects()
+        #获取顶点的序号
+        vId = vert.currentItemIndex()
+        #对所有骨骼循环
+        for jId in xrange(sc.numInfluenceObjects()):
+            jnt=infs[jId]
+            wgt=cmds.getAttr(sc.weightList[vId].weights[jId])
+            if wgt>0:
+                jnts.append(jnt)
+    jnts= list(set(jnts))
+
+    cmds.select(jnts)
+    ctls=[]
+    sls=jnts
+    for sl in sls:
+        ctl='eyeCTL_'+sl.split(':')[1]
+        ctls.append(ctl)
+    cmds.select(ctls)

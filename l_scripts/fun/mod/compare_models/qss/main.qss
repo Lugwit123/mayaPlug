@@ -1,0 +1,37 @@
+*{
+	font-size:12px;
+    font-family:"Microsoft YaHei";
+}
+
+QLabel#explain_label{
+	font-size:12px;
+}
+/*
+QTreeView::branch {
+    background: palette(base);
+}*/
+
+QTreeView::branch:has-siblings:!adjoins-item {
+    border-image: url(:/images/stylesheet-vline.png) 0;
+}
+
+QTreeView::branch:has-siblings:adjoins-item {
+    border-image: url(:/images/stylesheet-branch-more.png) 0;
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+    border-image: url(:/images/stylesheet-branch-end.png) 0;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+        border-image: none;
+        image: url(:/images/stylesheet-branch-closed.png);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+        border-image: none;
+        image: url(:/images/stylesheet-branch-open.png);
+}
+

@@ -1,0 +1,28 @@
+import sys
+import unreal
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
+
+class MyWindow(QMainWindow):
+    def __init__(self):
+        super(MyWindow, self).__init__()
+        self.setWindowTitle('Unreal PyQt Window')
+        self.setGeometry(100, 100, 400, 300)
+
+        layout = QVBoxLayout()
+        button = QPushButton('Click Me')
+        layout.addWidget(button)
+
+        container = QWidget()
+        container.setLayout(layout)
+        self.setCentralWidget(container)
+
+
+app=QApplication.instance() or QApplication( sys.argv )  # unreal 
+window = MyWindow()
+window.show()
+# 获取 Unreal 的主窗口并嵌入
+unreal.parent_external_window_to_slate(window.winId(),unreal.SlateParentWindowSearchMethod.ACTIVE_WINDOW)
+
+
+
+

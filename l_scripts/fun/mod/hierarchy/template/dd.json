@@ -1,0 +1,282 @@
+[
+  {
+    "expanded": true, 
+    "children": [
+      {
+        "name": "handsome", 
+        "expanded": true, 
+        "children": [
+          {
+            "label": "\u8d44\u4ea7\u7684\u6a21\u578b\u51e0\u4f55\u5f62\u7269\u4f53\u7ec4", 
+            "expanded": true, 
+            "children": [
+              {
+                "expanded": false, 
+                "name": "BODY_GRP", 
+                "condition": [], 
+                "label": "\u8eab\u4f53\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "OralCavity_GRP", 
+                "condition": [], 
+                "label": "\u53e3\u8154\u7ec4"
+              }, 
+              {
+                "name": "Eye_GRP", 
+                "expanded": true, 
+                "children": [
+                  {
+                    "expanded": false, 
+                    "name": "eyeBall_grp", 
+                    "condition": [], 
+                    "label": "\u773c\u7403\u7ec4"
+                  }, 
+                  {
+                    "expanded": false, 
+                    "name": "eyeLash_grp", 
+                    "condition": [], 
+                    "label": "\u776b\u6bdb\u7ec4"
+                  }, 
+                  {
+                    "expanded": false, 
+                    "name": "eyeGlasses_grp", 
+                    "condition": [], 
+                    "label": "\u73bb\u7483\u4f53"
+                  }
+                ], 
+                "condition": [], 
+                "label": "\u773c\u775b\u7ec4"
+              }
+            ], 
+            "condition": [], 
+            "name": "GEO_GRP"
+          }, 
+          {
+            "expanded": false, 
+            "name": "RIG_GRP", 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u7ed1\u5b9a\u63a7\u5236\u5668\u7ec4"
+          }, 
+          {
+            "label": "\u8d44\u4ea7\u5e03\u6599\u6a21\u578b\u7ec4", 
+            "expanded": true, 
+            "children": [
+              {
+                "expanded": false, 
+                "name": "UpperGarment_GRP", 
+                "condition": [], 
+                "label": "\u4e0a\u8863\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "LowerGarment_GRP", 
+                "condition": [], 
+                "label": "\u4e0b\u88c5\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "SHOES_GRP", 
+                "condition": [], 
+                "label": "\u978b\u5b50\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "Ornaments_GRP", 
+                "condition": [], 
+                "label": "\u9970\u54c1\u7ec4"
+              }
+            ], 
+            "condition": [], 
+            "name": "CLOTH_GRP"
+          }, 
+          {
+            "label": "\u8d44\u4ea7\u6bdb\u53d1\u7ec4", 
+            "expanded": true, 
+            "children": [
+              {
+                "expanded": false, 
+                "name": "HAIR_GEO", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1\u6a21\u578b"
+              }, 
+              {
+                "expanded": false, 
+                "name": "HAIR_GROOM", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1Groom"
+              }, 
+              {
+                "expanded": false, 
+                "name": "HAIR_labelS", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1\u63cf\u8ff0\u6587\u4ef6\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "HAIR_INTERACTIVE", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1\u4ea4\u4e92\u6a21\u5f0f\u5f0f\u7684\u7ec4"
+              }
+            ], 
+            "condition": [], 
+            "name": "HAIR_GRP"
+          }, 
+          {
+            "expanded": false, 
+            "name": "FACE_BLEND_GRP", 
+            "condition": [], 
+            "label": "\u8868\u60c5\u53d8\u5f62\u76ee\u6807\u6a21\u578b\u7ec4"
+          }, 
+          {
+            "expanded": false, 
+            "name": "OTHER_GRP", 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u7684\u5176\u4ed6\u4e00\u4e9b\u7269\u4f53"
+          }
+        ], 
+        "condition": [], 
+        "label": "\u6a21\u578b\u9ad8\u6a21\u7ec4"
+      }, 
+      {
+        "label": "\u6a21\u578b\u4f4e\u6a21\u7ec4", 
+        "expanded": false, 
+        "name": "{asset}_L_GRP", 
+        "condition": [], 
+        "children": [
+          {
+            "expanded": true, 
+            "children": [
+              {
+                "expanded": false, 
+                "name": "BODY_LOW_GRP", 
+                "condition": [], 
+                "label": "\u8eab\u4f53\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "OralCavity_LOW_GRP", 
+                "condition": [], 
+                "label": "\u53e3\u8154\u7ec4"
+              }, 
+              {
+                "label": "\u773c\u775b\u7ec4", 
+                "expanded": true, 
+                "children": [
+                  {
+                    "expanded": false, 
+                    "name": "eyeBall_LOW_grp", 
+                    "condition": [], 
+                    "label": "\u773c\u7403\u7ec4"
+                  }, 
+                  {
+                    "expanded": false, 
+                    "name": "eyeLash_LOW_grp", 
+                    "condition": [], 
+                    "label": "\u776b\u6bdb\u7ec4"
+                  }, 
+                  {
+                    "expanded": false, 
+                    "name": "eyeGlasses_LOW_grp", 
+                    "condition": [], 
+                    "label": "\u73bb\u7483\u4f53"
+                  }
+                ], 
+                "condition": [], 
+                "name": "Eye_LOW_GRP"
+              }
+            ], 
+            "name": "GEO_GRP", 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u7684\u6a21\u578b\u51e0\u4f55\u5f62\u7269\u4f53\u7ec4"
+          }, 
+          {
+            "expanded": false, 
+            "name": "RIG_LOW_GRP", 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u7ed1\u5b9a\u63a7\u5236\u5668\u7ec4"
+          }, 
+          {
+            "name": "CLOTH_LOW_GRP", 
+            "expanded": true, 
+            "children": [
+              {
+                "expanded": false, 
+                "name": "UpperGarment_LOW_GRP", 
+                "condition": [], 
+                "label": "\u4e0a\u8863\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "LowerGarment_LOW_GRP", 
+                "condition": [], 
+                "label": "\u4e0b\u88c5\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "SHOES_LOW_GRP", 
+                "condition": [], 
+                "label": "\u978b\u5b50\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "Ornaments_LOW_GRP", 
+                "condition": [], 
+                "label": "\u9970\u54c1\u7ec4"
+              }
+            ], 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u5e03\u6599\u6a21\u578b\u7ec4"
+          }, 
+          {
+            "name": "HAIR_LOW_GRP", 
+            "expanded": true, 
+            "children": [
+              {
+                "expanded": false, 
+                "name": "HAIR_LOW_GEO", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1\u6a21\u578b"
+              }, 
+              {
+                "expanded": false, 
+                "name": "HAIR_LOW_GROOM", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1Groom"
+              }, 
+              {
+                "expanded": false, 
+                "name": "HAIR_LOW_labelS", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1\u63cf\u8ff0\u6587\u4ef6\u7ec4"
+              }, 
+              {
+                "expanded": false, 
+                "name": "HAIR_LOW_INTERACTIVE", 
+                "condition": [], 
+                "label": "\u6bdb\u53d1\u4ea4\u4e92\u6a21\u5f0f\u5f0f\u7684\u7ec4"
+              }
+            ], 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u6bdb\u53d1\u7ec4"
+          }, 
+          {
+            "expanded": false, 
+            "name": "FACE_BLEND_LOW_GRP", 
+            "condition": [], 
+            "label": "\u8868\u60c5\u53d8\u5f62\u76ee\u6807\u6a21\u578b\u7ec4"
+          }, 
+          {
+            "expanded": false, 
+            "name": "OTHER_LOW_GRP", 
+            "condition": [], 
+            "label": "\u8d44\u4ea7\u7684\u5176\u4ed6\u4e00\u4e9b\u7269\u4f53"
+          }
+        ]
+      }
+    ], 
+    "name": "MASTER", 
+    "condition": [], 
+    "label": "\u8d44\u4ea7\u5927\u7ec4"
+  }
+]

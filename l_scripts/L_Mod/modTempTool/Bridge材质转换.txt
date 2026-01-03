@@ -1,0 +1,852 @@
+// -*- coding: utf-8 -*-
+//bridge材质转换-2022/7/9-NibNuj阿贵儿
+//使用方法：选择需要转换材质的模型或材质，运行即可
+if(`window -exists ZHRS`)
+{
+    deleteUI ZHRS;
+}
+window -t "Bridge材质转换" -s 0 -vis 1 ZHRS;
+window -e -wh 340 130 ZHRS;
+formLayout myLayout;
+
+//定义按钮UI
+string $Bridgeb1 = `button -l "转换成RedshiftMaterial" -c ZhuanHuanRSMat -w 330`;
+string $Bridgeb2 = `button -l "转换成RedshiftArchitectural" -c ZhuanHuanRSArch -w 330`;
+checkBox -l "置换" -v 0 Displ;
+checkBox -l "删除原本的材质" -v 1 DelNode;
+text -l "====将所选材质或所选模型的材质转换为Redshift材质====" tx1;
+
+formLayout -e
+-af tx1 "top" 8
+-af tx1 "left" 3
+-af Displ "top" 35
+-af Displ "left" 5
+-af DelNode "top" 35
+-af DelNode "left" 75
+-af $Bridgeb1 "top" 60
+-af $Bridgeb1 "left" 5
+-af $Bridgeb2 "top" 95
+-af $Bridgeb2 "left" 5
+
+myLayout;
+
+global proc ZhuanHuanRSMat()
+{
+    string $sel[] =`ls -sl`;
+    string $MeshG[];
+    string $attrA =`objectType $sel[0]`;
+    for($i=0;$i<`size($sel)`;$i++)
+    {
+        if(`objectType $sel[$i]`==$attrA)
+        {
+            stringArrayInsertAtIndex(0,$MeshG,$sel[$i]);
+        }
+    }
+    if(`size($sel)`==`size($MeshG)`)
+    {
+        if($attrA=="transform")
+        {
+            print "全都是模型";
+            pickWalk -d down;
+            string $selShape[]=`ls -sl`;
+            for($iii=0;$iii<`size($selShape)`;$iii++)
+            {
+                string $SGNameAll[]=`listConnections -d 1 $selShape[$iii]`;
+                string $SGName[];
+                for($i=0;$i<`size($SGNameAll)`;$i++)
+                {
+                    if(`objectType $SGNameAll[$i]`=="shadingEngine")
+                    {
+                        stringArrayInsertAtIndex(0,$SGName,$SGNameAll[$i]);
+                    }
+                }
+                print $SGName[0];
+                string $MatName[] = `defaultNavigation -defaultTraversal -destination ($SGName[0]+".surfaceShader")`;
+                //创建材质并匹配名称
+                nodeEdCreateNodeCommand "RedshiftMaterial";
+                string $RSMat[]=`ls -sl`;
+                string $RSSG=$RSMat[0]+"SG";
+                rename $RSMat[0] ("RS_"+$MatName[0]);
+                rename $RSSG ("RS_"+$MatName[0]+"_SG");
+                //连接颜色
+                string $ColorName[] = `defaultNavigation -defaultTraversal -destination ($MatName[0]+".baseColor")`;
+                if(`size($ColorName)`==1)
+                {
+                    if(`objectType $ColorName[0]`=="file")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[0]+".diffuse_color");
+                    }
+                    else if(`objectType $ColorName[0]`=="layeredTexture")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[0]+".diffuse_color");
+                    }
+                    else
+                    {
+                        string $ColorNod[]=`listConnections -d 1 $ColorName[0]`;
+                        string $ColorFileName[];
+                            for($ii=0;$ii<`size($ColorNod)`;$ii++)
+                        {
+                            if(`objectType $ColorNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$ColorFileName,$ColorNod[$ii]);
+                            }
+                        }
+                        print $ColorFileName[0];
+                        connectAttr -force ($ColorFileName[0]+".outColor") ("RS_"+$MatName[0]+".diffuse_color");
+                    }
+                }
+                //连接粗糙度
+                string $RoughnessName[] = `defaultNavigation -defaultTraversal -destination ($MatName[0]+".specularRoughness")`;
+                if(`size($RoughnessName)`==1)
+                {
+                        if(`objectType $RoughnessName[0]`=="file")
+                    {
+                        connectAttr -force ($RoughnessName[0]+".outAlpha") ("RS_"+$MatName[0]+".refl_roughness");
+                    }
+                    else
+                    {
+                        string $RoughnessNod[]=`listConnections -d 1 $RoughnessName[0]`;
+                        string $RoughnessFileName[];
+                            for($ii=0;$ii<`size($RoughnessNod)`;$ii++)
+                        {
+                            if(`objectType $RoughnessNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$RoughnessFileName,$RoughnessNod[$ii]);
+                            }
+                        }
+                        print $RoughnessFileName[0];
+                        connectAttr -force ($RoughnessFileName[0]+".outAlpha") ("RS_"+$MatName[0]+".refl_roughness");
+                    }
+                }
+                //连接金属度
+                string $MetalnessName[] =`defaultNavigation -defaultTraversal -destination ($MatName[0]+".metalness")`;
+                if(`size($MetalnessName)`==1)
+                {
+                        setAttr ("RS_"+$MatName[0]+".refl_fresnel_mode") 2;
+                        if(`objectType $MetalnessName[0]`=="file")
+                    {
+                        connectAttr -force ($MetalnessName[0]+".outAlpha") ("RS_"+$MatName[0]+".refl_metalness");
+                    }
+                    else
+                    {
+                        string $MetalnessNod[]=`listConnections -d 1 $MetalnessName[0]`;
+                        string $MetalnessFileName[];
+                            for($ii=0;$ii<`size($MetalnessNod)`;$ii++)
+                        {
+                            if(`objectType $MetalnessNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$MetalnessFileName,$MetalnessNod[$ii]);
+                            }
+                        }
+                        print $MetalnessFileName[0];
+                        connectAttr -force ($MetalnessFileName[0]+".outAlpha") ("RS_"+$MatName[0]+".refl_metalness");
+                    }
+                }
+                //连接法线
+                string $NormalName[] =`defaultNavigation -defaultTraversal -destination ($MatName[0]+".normalCamera")`;
+                if(`size($NormalName)`==1)
+                {
+                        if(`objectType $NormalName[0]`=="file")
+                    {
+                        string $NormalPath =`getAttr ($NormalName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[0]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                    else
+                    {
+                        string $NormalNod[]=`listConnections -d 1 $NormalName[0]`;
+                        string $NormalFileName[];
+                            for($ii=0;$ii<`size($NormalNod)`;$ii++)
+                        {
+                            if(`objectType $NormalNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$NormalFileName,$NormalNod[$ii]);
+                            }
+                        }
+                        print $NormalFileName[0];
+                        string $NormalPath =`getAttr ($NormalFileName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[0]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                }
+                //连接opacity
+                string $OpacityName[] =`defaultNavigation -defaultTraversal -destination ($MatName[0]+".opacity")`;
+                if(`size($OpacityName)`==1)
+                {
+                    connectAttr -force ($OpacityName[0]+".outColor") ("RS_"+$MatName[0]+".opacity_color");
+                }
+                //连接置换
+                if(`checkBox -q -v Displ`==1)
+                {
+                    string $LinSgNode[]=`listConnections -d 0 $SGName[0]`;
+                    string $DisplName[];
+                    for($i=0;$i<`size($LinSgNode)`;$i++)
+                    {
+                        if(`objectType $LinSgNode[$i]`=="displacementShader")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                        else if(`objectType $LinSgNode[$i]`=="file")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                    }
+                    print $DisplName;
+                    if(`size($DisplName)`==1)
+                    {
+                        if(`objectType $DisplName[0]`=="displacementShader")
+                        {
+                            //如果是置换节点
+                            string $DisplNod[]=`listConnections -d 1 $DisplName[0]`;
+                            string $DisplFileName[];
+                                for($ii=0;$ii<`size($DisplNod)`;$ii++)
+                            {
+                                if(`objectType $DisplNod[$ii]`=="file")
+                                {
+                                    stringArrayInsertAtIndex(0,$DisplFileName,$DisplNod[$ii]);
+                                }
+                            }
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplFileName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$MatName[0]+"_SG"+".displacementShader");
+                        }
+                        else if(`objectType $DisplName[0]`=="file")
+                        {
+                            //如果是文件节点
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$MatName[0]+"_SG"+".displacementShader");
+                        }
+                        pickWalk -d up;
+                        setAttr ($selShape[$iii]+".rsEnableSubdivision") 1;
+                        setAttr ($selShape[$iii]+".rsEnableDisplacement") 1;
+                    }
+                }
+                select -r $MatName[0];
+                hyperShade -objects "";
+                sets -e -forceElement ("RS_"+$MatName[0]+"_SG");
+                //删除原始节点
+                if(`checkBox -q -v DelNode`==1)
+                {
+                    delete $MatName[0];delete $SGName[0];
+                    //rename ("RS_"+$MatName[$iii]) $MatName[$iii];
+                    //rename ("RS_"+$SGName[0]) $SGName[0];
+                }
+            }
+        }
+        else if($attrA=="aiStandardSurface")
+        {
+            print "全是阿诺德材质";
+            string $MatName[]=`ls -sl`;
+            for($iii=0;$iii<`size($MatName)`;$iii++)
+            {
+                string $SGNameAll[]=`listConnections -d 1 $MatName[$iii]`;
+                string $SGName[];
+                for($i=0;$i<`size($SGNameAll)`;$i++)
+                {
+                    if(`objectType $SGNameAll[$i]`=="shadingEngine")
+                    {
+                        stringArrayInsertAtIndex(0,$SGName,$SGNameAll[$i]);
+                    }
+                }
+                print $SGName[0];
+                //创建材质并匹配名称
+                nodeEdCreateNodeCommand "RedshiftMaterial";
+                string $RSMat[]=`ls -sl`;
+                string $RSSG=$RSMat[0]+"SG";
+                rename $RSMat[0] ("RS_"+$MatName[$iii]);
+                rename $RSSG ("RS_"+$SGName[0]);
+                //连接颜色
+                string $ColorName[] = `defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".baseColor")`;
+                if(`size($ColorName)`==1)
+                {
+                        if(`objectType $ColorName[0]`=="file")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[$iii]+".diffuse_color");
+                    }
+                    else if(`objectType $ColorName[0]`=="layeredTexture")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[$iii]+".diffuse_color");
+                    }
+                    else
+                    {
+                        string $ColorNod[]=`listConnections -d 1 $ColorName[0]`;
+                        string $ColorFileName[];
+                            for($ii=0;$ii<`size($ColorNod)`;$ii++)
+                        {
+                            if(`objectType $ColorNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$ColorFileName,$ColorNod[$ii]);
+                            }
+                            else if(`objectType $ColorNod[$ii]`=="layeredTexture")
+                            {
+                                stringArrayInsertAtIndex(0,$ColorFileName,$ColorNod[$ii]);
+                            }
+                        }
+                        print $ColorFileName[0];
+                        connectAttr -force ($ColorFileName[0]+".outColor") ("RS_"+$MatName[$iii]+".diffuse_color");
+                    }
+                }
+                //连接粗糙度
+                string $RoughnessName[] = `defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".specularRoughness")`;
+                if(`size($RoughnessName)`==1)
+                {
+                        if(`objectType $RoughnessName[0]`=="file")
+                    {
+                        connectAttr -force ($RoughnessName[0]+".outAlpha") ("RS_"+$MatName[$iii]+".refl_roughness");
+                    }
+                    else
+                    {
+                        string $RoughnessNod[]=`listConnections -d 1 $RoughnessName[0]`;
+                        string $RoughnessFileName[];
+                            for($ii=0;$ii<`size($RoughnessNod)`;$ii++)
+                        {
+                            if(`objectType $RoughnessNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$RoughnessFileName,$RoughnessNod[$ii]);
+                            }
+                        }
+                        print $RoughnessFileName[0];
+                        connectAttr -force ($RoughnessFileName[0]+".outAlpha") ("RS_"+$MatName[$iii]+".refl_roughness");
+                    }
+                }
+                //连接金属度
+                string $MetalnessName[] =`defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".metalness")`;
+                if(`size($MetalnessName)`==1)
+                {
+                        setAttr ("RS_"+$MatName[$iii]+".refl_fresnel_mode") 2;
+                        if(`objectType $MetalnessName[0]`=="file")
+                    {
+                        connectAttr -force ($MetalnessName[0]+".outAlpha") ("RS_"+$MatName[$iii]+".refl_metalness");
+                    }
+                    else
+                    {
+                        string $MetalnessNod[]=`listConnections -d 1 $MetalnessName[0]`;
+                        string $MetalnessFileName[];
+                            for($ii=0;$ii<`size($MetalnessNod)`;$ii++)
+                        {
+                            if(`objectType $MetalnessNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$MetalnessFileName,$MetalnessNod[$ii]);
+                            }
+                        }
+                        print $MetalnessFileName[0];
+                        connectAttr -force ($MetalnessFileName[0]+".outAlpha") ("RS_"+$MatName[$iii]+".refl_metalness");
+                    }
+                }
+                //连接法线
+                string $NormalName[] =`defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".normalCamera")`;
+                if(`size($NormalName)`==1)
+                {
+                        if(`objectType $NormalName[0]`=="file")
+                    {
+                        string $NormalPath =`getAttr ($NormalName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[$iii]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                    else
+                    {
+                        string $NormalNod[]=`listConnections -d 1 $NormalName[0]`;
+                        string $NormalFileName[];
+                            for($ii=0;$ii<`size($NormalNod)`;$ii++)
+                        {
+                            if(`objectType $NormalNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$NormalFileName,$NormalNod[$ii]);
+                            }
+                        }
+                        print $NormalFileName[0];
+                        string $NormalPath =`getAttr ($NormalFileName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[$iii]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                }
+                //连接opacity
+                string $OpacityName[] =`defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".opacity")`;
+                if(`size($OpacityName)`==1)
+                {
+                    connectAttr -force ($OpacityName[0]+".outColor") ("RS_"+$MatName[$iii]+".opacity_color");
+                }
+                //连接置换
+                if(`checkBox -q -v Displ`==1)
+                {
+                    string $LinSgNode[]=`listConnections -d 0 $SGName[0]`;
+                    string $DisplName[];
+                    for($i=0;$i<`size($LinSgNode)`;$i++)
+                    {
+                        if(`objectType $LinSgNode[$i]`=="displacementShader")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                        else if(`objectType $LinSgNode[$i]`=="file")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                    }
+                    print $DisplName;
+                    if(`size($DisplName)`==1)
+                    {
+                        if(`objectType $DisplName[0]`=="displacementShader")
+                        {
+                            //如果是置换节点
+                            string $DisplNod[]=`listConnections -d 1 $DisplName[0]`;
+                            string $DisplFileName[];
+                                for($ii=0;$ii<`size($DisplNod)`;$ii++)
+                            {
+                                if(`objectType $DisplNod[$ii]`=="file")
+                                {
+                                    stringArrayInsertAtIndex(0,$DisplFileName,$DisplNod[$ii]);
+                                }
+                            }
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplFileName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$SGName[0]+".displacementShader");
+                        }
+                        else if(`objectType $DisplName[0]`=="file")
+                        {
+                            //如果是文件节点
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$SGName[0]+".displacementShader");
+                        }
+                    }
+                }
+                //判断材质是否有赋予给模型
+                select -r $MatName[$iii];
+                hyperShade -objects "";
+                string $selectMeshShapeIF[] =`ls -sl`;
+                if(`size($selectMeshShapeIF)`>0)
+                {
+                    sets -e -forceElement ("RS_"+$SGName[0]);
+                    if(`checkBox -q -v Displ`==1)
+                    {
+                        setAttr ($selectMeshShapeIF[0]+".rsEnableSubdivision") 1;
+                        setAttr ($selectMeshShapeIF[0]+".rsEnableDisplacement") 1;
+                    }
+                }
+                //删除原始节点
+                if(`checkBox -q -v DelNode`==1)
+                {
+                    delete $MatName[$iii];delete $SGName[0];
+                    //rename ("RS_"+$MatName[$iii]) $MatName[$iii];
+                    //rename ("RS_"+$SGName[0]) $SGName[0];
+                }
+            }
+            
+            
+            
+        }
+    }
+    else
+    {
+        print "请检查选择的物品中是否有其它类型元件(必须只选择模型或只选择材质)";
+    }
+   
+}
+////////////////////////////////////////////////////////////////////////
+global proc ZhuanHuanRSArch()
+{
+    string $sel[] =`ls -sl`;
+    string $MeshG[];
+    string $attrA =`objectType $sel[0]`;
+    for($i=0;$i<`size($sel)`;$i++)
+    {
+        if(`objectType $sel[$i]`==$attrA)
+        {
+            stringArrayInsertAtIndex(0,$MeshG,$sel[$i]);
+        }
+    }
+    if(`size($sel)`==`size($MeshG)`)
+    {
+        if($attrA=="transform")
+        {
+            print "全都是模型";
+            pickWalk -d down;
+            string $selShape[]=`ls -sl`;
+            for($iii=0;$iii<`size($selShape)`;$iii++)
+            {
+                string $SGNameAll[]=`listConnections -d 1 $selShape[$iii]`;
+                string $SGName[];
+                for($i=0;$i<`size($SGNameAll)`;$i++)
+                {
+                    if(`objectType $SGNameAll[$i]`=="shadingEngine")
+                    {
+                        stringArrayInsertAtIndex(0,$SGName,$SGNameAll[$i]);
+                    }
+                }
+                print $SGName[0];
+                string $MatName[] = `defaultNavigation -defaultTraversal -destination ($SGName[0]+".surfaceShader")`;
+                //创建材质并匹配名称
+                nodeEdCreateNodeCommand "RedshiftArchitectural";
+                string $RSMat[]=`ls -sl`;
+                string $RSSG=$RSMat[0]+"SG";
+                rename $RSMat[0] ("RS_"+$MatName[0]);
+                rename $RSSG ("RS_"+$MatName[0]+"_SG");
+                //连接颜色
+                string $ColorName[] = `defaultNavigation -defaultTraversal -destination ($MatName[0]+".baseColor")`;
+                if(`size($ColorName)`==1)
+                {
+                    if(`objectType $ColorName[0]`=="file")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[0]+".diffuse");
+                    }
+                    else if(`objectType $ColorName[0]`=="layeredTexture")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[0]+".diffuse");
+                    }
+                    else
+                    {
+                        string $ColorNod[]=`listConnections -d 1 $ColorName[0]`;
+                        string $ColorFileName[];
+                            for($ii=0;$ii<`size($ColorNod)`;$ii++)
+                        {
+                            if(`objectType $ColorNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$ColorFileName,$ColorNod[$ii]);
+                            }
+                        }
+                        print $ColorFileName[0];
+                        connectAttr -force ($ColorFileName[0]+".outColor") ("RS_"+$MatName[0]+".diffuse");
+                    }
+                }
+                //连接粗糙度
+                string $RoughnessName[] = `defaultNavigation -defaultTraversal -destination ($MatName[0]+".specularRoughness")`;
+                if(`size($RoughnessName)`==1)
+                {
+                        if(`objectType $RoughnessName[0]`=="file")
+                    {
+                        nodeEdCreateNodeCommand "reverse";
+                        string $Rev[] =`ls -sl`;
+                        connectAttr -force ($RoughnessName[0]+".outColor") ($Rev[0]+".input");
+                        connectAttr -force ($Rev[0]+".output.outputX") ("RS_"+$MatName[0]+".refl_gloss");
+                    }
+                    else
+                    {
+                        string $RoughnessNod[]=`listConnections -d 1 $RoughnessName[0]`;
+                        string $RoughnessFileName[];
+                            for($ii=0;$ii<`size($RoughnessNod)`;$ii++)
+                        {
+                            if(`objectType $RoughnessNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$RoughnessFileName,$RoughnessNod[$ii]);
+                            }
+                        }
+                        print $RoughnessFileName[0];
+                        nodeEdCreateNodeCommand "reverse";
+                        string $Rev[] =`ls -sl`;
+                        connectAttr -force ($RoughnessFileName[0]+".outColor") ($Rev[0]+".input");
+                        connectAttr -force ($Rev[0]+".output.outputX") ("RS_"+$MatName[0]+".refl_gloss");
+                    }
+                }
+                //连接法线
+                string $NormalName[] =`defaultNavigation -defaultTraversal -destination ($MatName[0]+".normalCamera")`;
+                if(`size($NormalName)`==1)
+                {
+                        if(`objectType $NormalName[0]`=="file")
+                    {
+                        string $NormalPath =`getAttr ($NormalName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[0]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                    else
+                    {
+                        string $NormalNod[]=`listConnections -d 1 $NormalName[0]`;
+                        string $NormalFileName[];
+                            for($ii=0;$ii<`size($NormalNod)`;$ii++)
+                        {
+                            if(`objectType $NormalNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$NormalFileName,$NormalNod[$ii]);
+                            }
+                        }
+                        print $NormalFileName[0];
+                        string $NormalPath =`getAttr ($NormalFileName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[0]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                }
+                //连接opacity
+                string $OpacityName[] =`defaultNavigation -defaultTraversal -destination ($MatName[0]+".opacity")`;
+                if(`size($OpacityName)`==1)
+                {
+                    connectAttr -force ($OpacityName[0]+".outColor.outColorR") ("RS_"+$MatName[0]+".cutout_opacity");
+                }
+                //连接置换
+                if(`checkBox -q -v Displ`==1)
+                {
+                    string $LinSgNode[]=`listConnections -d 0 $SGName[0]`;
+                    string $DisplName[];
+                    for($i=0;$i<`size($LinSgNode)`;$i++)
+                    {
+                        if(`objectType $LinSgNode[$i]`=="displacementShader")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                        else if(`objectType $LinSgNode[$i]`=="file")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                    }
+                    print $DisplName;
+                    if(`size($DisplName)`==1)
+                    {
+                        if(`objectType $DisplName[0]`=="displacementShader")
+                        {
+                            //如果是置换节点
+                            string $DisplNod[]=`listConnections -d 1 $DisplName[0]`;
+                            string $DisplFileName[];
+                                for($ii=0;$ii<`size($DisplNod)`;$ii++)
+                            {
+                                if(`objectType $DisplNod[$ii]`=="file")
+                                {
+                                    stringArrayInsertAtIndex(0,$DisplFileName,$DisplNod[$ii]);
+                                }
+                            }
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplFileName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$MatName[0]+"_SG"+".displacementShader");
+                        }
+                        else if(`objectType $DisplName[0]`=="file")
+                        {
+                            //如果是文件节点
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$MatName[0]+"_SG"+".displacementShader");
+                        }
+                        pickWalk -d up;
+                        setAttr ($selShape[$iii]+".rsEnableSubdivision") 1;
+                        setAttr ($selShape[$iii]+".rsEnableDisplacement") 1;
+                    }
+                }
+                select -r $MatName[0];
+                hyperShade -objects "";
+                sets -e -forceElement ("RS_"+$MatName[0]+"_SG");
+                //删除原始节点
+                if(`checkBox -q -v DelNode`==1)
+                {
+                    delete $MatName[0];delete $SGName[0];
+                    //rename ("RS_"+$MatName[$iii]) $MatName[$iii];
+                    //rename ("RS_"+$SGName[0]) $SGName[0];
+                }
+            }
+        }
+        else if($attrA=="aiStandardSurface")
+        {
+            print "全是阿诺德材质";
+            string $MatName[]=`ls -sl`;
+            for($iii=0;$iii<`size($MatName)`;$iii++)
+            {
+                string $SGNameAll[]=`listConnections -d 1 $MatName[$iii]`;
+                string $SGName[];
+                for($i=0;$i<`size($SGNameAll)`;$i++)
+                {
+                    if(`objectType $SGNameAll[$i]`=="shadingEngine")
+                    {
+                        stringArrayInsertAtIndex(0,$SGName,$SGNameAll[$i]);
+                    }
+                }
+                print $SGName[0];
+                //创建材质并匹配名称
+                nodeEdCreateNodeCommand "RedshiftArchitectural";
+                string $RSMat[]=`ls -sl`;
+                string $RSSG=$RSMat[0]+"SG";
+                rename $RSMat[0] ("RS_"+$MatName[$iii]);
+                rename $RSSG ("RS_"+$SGName[0]);
+                //连接颜色
+                string $ColorName[] = `defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".baseColor")`;
+                if(`size($ColorName)`==1)
+                {
+                        if(`objectType $ColorName[0]`=="file")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[$iii]+".diffuse");
+                    }
+                    else if(`objectType $ColorName[0]`=="layeredTexture")
+                    {
+                        connectAttr -force ($ColorName[0]+".outColor") ("RS_"+$MatName[$iii]+".diffuse");
+                    }
+                    else
+                    {
+                        string $ColorNod[]=`listConnections -d 1 $ColorName[0]`;
+                        string $ColorFileName[];
+                            for($ii=0;$ii<`size($ColorNod)`;$ii++)
+                        {
+                            if(`objectType $ColorNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$ColorFileName,$ColorNod[$ii]);
+                            }
+                            else if(`objectType $ColorNod[$ii]`=="layeredTexture")
+                            {
+                                stringArrayInsertAtIndex(0,$ColorFileName,$ColorNod[$ii]);
+                            }
+                        }
+                        print $ColorFileName[0];
+                        connectAttr -force ($ColorFileName[0]+".outColor") ("RS_"+$MatName[$iii]+".diffuse");
+                    }
+                }
+                //连接粗糙度
+                string $RoughnessName[] = `defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".specularRoughness")`;
+                if(`size($RoughnessName)`==1)
+                {
+                        if(`objectType $RoughnessName[0]`=="file")
+                    {
+                        nodeEdCreateNodeCommand "reverse";
+                        string $Rev[] =`ls -sl`;
+                        connectAttr -force ($RoughnessName[0]+".outColor") ($Rev[0]+".input");
+                        connectAttr -force ($Rev[0]+".output.outputX") ("RS_"+$MatName[$iii]+".refl_gloss");
+                    }
+                    else
+                    {
+                        string $RoughnessNod[]=`listConnections -d 1 $RoughnessName[0]`;
+                        string $RoughnessFileName[];
+                            for($ii=0;$ii<`size($RoughnessNod)`;$ii++)
+                        {
+                            if(`objectType $RoughnessNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$RoughnessFileName,$RoughnessNod[$ii]);
+                            }
+                        }
+                        print $RoughnessFileName[0];
+                        nodeEdCreateNodeCommand "reverse";
+                        string $Rev[] =`ls -sl`;
+                        connectAttr -force ($RoughnessFileName[0]+".outColor") ($Rev[0]+".input");
+                        connectAttr -force ($Rev[0]+".output.outputX") ("RS_"+$MatName[$iii]+".refl_gloss");
+                    }
+                }
+                //连接法线
+                string $NormalName[] =`defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".normalCamera")`;
+                if(`size($NormalName)`==1)
+                {
+                        if(`objectType $NormalName[0]`=="file")
+                    {
+                        string $NormalPath =`getAttr ($NormalName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[$iii]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                    else
+                    {
+                        string $NormalNod[]=`listConnections -d 1 $NormalName[0]`;
+                        string $NormalFileName[];
+                            for($ii=0;$ii<`size($NormalNod)`;$ii++)
+                        {
+                            if(`objectType $NormalNod[$ii]`=="file")
+                            {
+                                stringArrayInsertAtIndex(0,$NormalFileName,$NormalNod[$ii]);
+                            }
+                        }
+                        print $NormalFileName[0];
+                        string $NormalPath =`getAttr ($NormalFileName[0]+".fileTextureName")`;
+                        shadingNode -asTexture RedshiftNormalMap;
+                        string $rsNormal[] = `ls -sl`;
+                        rename $rsNormal[0] ("RS_"+$NormalName[0]);
+                        connectAttr -force ("RS_"+$NormalName[0]+".outDisplacementVector") ("RS_"+$MatName[$iii]+".bump_input");
+                        setAttr -type "string" ("RS_"+$NormalName[0]+".tex0") $NormalPath;
+                    }
+                }
+                //连接opacity
+                string $OpacityName[] =`defaultNavigation -defaultTraversal -destination ($MatName[$iii]+".opacity")`;
+                if(`size($OpacityName)`==1)
+                {
+                    connectAttr -force ($OpacityName[0]+".outColor.outColorR") ("RS_"+$MatName[$iii]+".cutout_opacity");
+                }
+                //连接置换
+                if(`checkBox -q -v Displ`==1)
+                {
+                    string $LinSgNode[]=`listConnections -d 0 $SGName[0]`;
+                    string $DisplName[];
+                    for($i=0;$i<`size($LinSgNode)`;$i++)
+                    {
+                        if(`objectType $LinSgNode[$i]`=="displacementShader")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                        else if(`objectType $LinSgNode[$i]`=="file")
+                        {
+                            stringArrayInsertAtIndex(1,$DisplName,$LinSgNode[$i]);
+                        }
+                    }
+                    print $DisplName;
+                    if(`size($DisplName)`==1)
+                    {
+                        if(`objectType $DisplName[0]`=="displacementShader")
+                        {
+                            //如果是置换节点
+                            string $DisplNod[]=`listConnections -d 1 $DisplName[0]`;
+                            string $DisplFileName[];
+                                for($ii=0;$ii<`size($DisplNod)`;$ii++)
+                            {
+                                if(`objectType $DisplNod[$ii]`=="file")
+                                {
+                                    stringArrayInsertAtIndex(0,$DisplFileName,$DisplNod[$ii]);
+                                }
+                            }
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplFileName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$SGName[0]+".displacementShader");
+                        }
+                        else if(`objectType $DisplName[0]`=="file")
+                        {
+                            //如果是文件节点
+                            shadingNode -asShader RedshiftDisplacement;
+                            string $SelDispl[] = `ls -sl`;
+                            connectAttr -force ($DisplName[0]+".outColor") ($SelDispl[0]+".texMap");
+                            connectAttr -force ($SelDispl[0]+".out") ("RS_"+$SGName[0]+".displacementShader");
+                        }
+                    }
+                }
+                //判断材质是否有赋予给模型
+                select -r $MatName[$iii];
+                hyperShade -objects "";
+                string $selectMeshShapeIF[] =`ls -sl`;
+                if(`size($selectMeshShapeIF)`>0)
+                {
+                    sets -e -forceElement ("RS_"+$SGName[0]);
+                    if(`checkBox -q -v Displ`==1)
+                    {
+                        setAttr ($selectMeshShapeIF[0]+".rsEnableSubdivision") 1;
+                        setAttr ($selectMeshShapeIF[0]+".rsEnableDisplacement") 1;
+                    }
+                }
+                //删除原始节点
+                if(`checkBox -q -v DelNode`==1)
+                {
+                    delete $MatName[$iii];delete $SGName[0];
+                    //rename ("RS_"+$MatName[$iii]) $MatName[$iii];
+                    //rename ("RS_"+$SGName[0]) $SGName[0];
+                }
+            }
+        }
+    }
+    else
+    {
+        print "请检查选择的物品中是否有其它类型元件(必须只选择模型或只选择材质)";
+    }
+   
+}

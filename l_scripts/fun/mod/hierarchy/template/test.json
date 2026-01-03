@@ -1,0 +1,1878 @@
+[
+  {
+    "name": "MASTER",
+    "expanded": true,
+    "description": "\u8d44\u4ea7\u5927\u7ec4",
+    "condition": "True",
+    "subs": [
+      {
+        "name": "{asset}_HIGH_GRP",
+        "expanded": true,
+        "description": "\u6a21\u578b\u9ad8\u6a21\u7ec4",
+        "condition": "True",
+        "subs": [
+          {
+            "name": "GEO_GRP",
+            "expanded": true,
+            "description": "\u8d44\u4ea7\u7684\u6a21\u578b\u51e0\u4f55\u5f62\u7269\u4f53\u7ec4",
+            "condition": "True",
+            "subs": [
+              {
+                "name": "BODY_GRP",
+                "expanded": true,
+                "description": "\u8eab\u4f53\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "body",
+                    "expanded": true,
+                    "description": "\u8eab\u4f53",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              },
+              {
+                "name": "OralCavity_GRP",
+                "expanded": true,
+                "description": "\u53e3\u8154\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "teethUp",
+                    "expanded": true,
+                    "description": "\u4e0a\u7259\u9f7f",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "teethLo",
+                    "expanded": true,
+                    "description": "\u4e0b\u7259\u9f7f",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "tongue",
+                    "expanded": true,
+                    "description": "\u820c\u5934",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              },
+              {
+                "name": "Eye_GRP",
+                "expanded": true,
+                "description": "\u773c\u775b\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "eyeBall_GRP",
+                    "expanded": true,
+                    "description": "\u773c\u7403\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "eyeBall_L",
+                        "expanded": true,
+                        "description": "\u773c\u7403",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "eyeBall_R",
+                        "expanded": true,
+                        "description": "\u773c\u7403",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Lashes_GRP",
+                    "expanded": true,
+                    "description": "\u776b\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "upLashes_GRP",
+                        "expanded": true,
+                        "description": "\u4e0a\u776b\u6bdb\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "upLashes_L",
+                            "expanded": true,
+                            "description": "\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upLashes_R",
+                            "expanded": true,
+                            "description": "\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "loLashes_GRP",
+                        "expanded": true,
+                        "description": "\u4e0b\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "loLashes_L",
+                            "expanded": true,
+                            "description": "\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "loLashes_R",
+                            "expanded": true,
+                            "description": "\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "camea_GRP",
+                    "expanded": true,
+                    "description": "\u89d2\u819c\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "camea_L",
+                        "expanded": true,
+                        "description": "\u89d2\u819c",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "camea_R",
+                        "expanded": true,
+                        "description": "\u89d2\u819c",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "eyeHighLigth_GRP",
+                    "expanded": true,
+                    "description": "\u9ad8\u5149\u70b9\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "eyeHighLigth_L",
+                        "expanded": true,
+                        "description": "\u9ad8\u5149\u70b9",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "eyeHighLigth_R",
+                        "expanded": true,
+                        "description": "\u9ad8\u5149\u70b9",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "GeoCloth_GRP",
+                "expanded": true,
+                "description": "\u51e0\u4f55\u4f53\u5e03\u6599\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "upperGarment_GRP",
+                    "expanded": true,
+                    "description": "\u4e0a\u88c5\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "jacket",
+                        "expanded": true,
+                        "description": "\u4e0a\u8863",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "LowerGarment_GRP",
+                    "expanded": true,
+                    "description": "\u4e0b\u88c5\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "trousers",
+                        "expanded": true,
+                        "description": "\u957f\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SHOES_GRP",
+                    "expanded": true,
+                    "description": "\u978b\u5b50\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "shose",
+                        "expanded": true,
+                        "description": "\u978b\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shose_L",
+                        "expanded": true,
+                        "description": "\u978b\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shose_R",
+                        "expanded": true,
+                        "description": "\u978b\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "boots_GRP",
+                        "expanded": true,
+                        "description": "\u9774\u5b50\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "boots_L",
+                            "expanded": true,
+                            "description": "\u9774\u5b50",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "boots_R",
+                            "expanded": true,
+                            "description": "\u9774\u5b50",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "boots",
+                            "expanded": true,
+                            "description": "\u9774\u5b50",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "shoeLace_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u5e26\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "shoeLace_L",
+                            "expanded": true,
+                            "description": "\u978b\u5e26",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeLace_R",
+                            "expanded": true,
+                            "description": "\u978b\u5e26",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeLace",
+                            "expanded": true,
+                            "description": "\u978b\u5e26",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "upper_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u5e2e\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "upper_L",
+                            "expanded": true,
+                            "description": "\u978b\u5e2e",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upper_R",
+                            "expanded": true,
+                            "description": "\u978b\u5e2e",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upper",
+                            "expanded": true,
+                            "description": "\u978b\u5e2e",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "sole_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u5e95\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "sole_L",
+                            "expanded": true,
+                            "description": "\u978b\u5e95",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "sole_R",
+                            "expanded": true,
+                            "description": "\u978b\u5e95",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "sole",
+                            "expanded": true,
+                            "description": "\u978b\u5e95",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "shoeHeel_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u8ddf\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "shoeHeel_L",
+                            "expanded": true,
+                            "description": "\u978b\u8ddf",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeHeel_R",
+                            "expanded": true,
+                            "description": "\u978b\u8ddf",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeHeel",
+                            "expanded": true,
+                            "description": "\u978b\u8ddf",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "shoeTongue_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u820c\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "shoeTongue",
+                            "expanded": true,
+                            "description": "\u978b\u820c",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeTongue_L",
+                            "expanded": true,
+                            "description": "\u978b\u820c",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeTongue_R",
+                            "expanded": true,
+                            "description": "\u978b\u820c",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "GeoHair_GRP",
+                "expanded": true,
+                "description": "\u51e0\u4f55\u4f53\u6bdb\u53d1\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "geoHair",
+                    "expanded": true,
+                    "description": "\u51e0\u4f55\u4f53\u6bdb\u53d1",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "bangs_GRP",
+                    "expanded": true,
+                    "description": "\u5218\u6d77\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "boneBeam",
+                        "expanded": true,
+                        "description": "\u9aa8\u6881",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "crown_GRP",
+                    "expanded": true,
+                    "description": "\u9876\u51a0\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "crown",
+                        "expanded": true,
+                        "description": "\u9876\u51a0",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "boneBeam_GRP",
+                    "expanded": true,
+                    "description": "\u9aa8\u6881\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "boneBeam_GRP",
+                        "expanded": true,
+                        "description": "\u9aa8\u6881\u7ec4",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "side_GRP",
+                    "expanded": true,
+                    "description": "\u4fa7\u90e8\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "side",
+                        "expanded": true,
+                        "description": "\u4fa7\u90e8",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rearPillow_GRP",
+                    "expanded": true,
+                    "description": "\u540e\u6795\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "rearPillow",
+                        "expanded": true,
+                        "description": "\u540e\u6795",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "hindNeck_GRP",
+                    "expanded": true,
+                    "description": "\u540e\u9888\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "hindNeck",
+                        "expanded": true,
+                        "description": "\u540e\u9888",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "brow_GRP",
+                    "expanded": true,
+                    "description": "\u7709\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "brow",
+                        "expanded": true,
+                        "description": "\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "brow_L",
+                        "expanded": true,
+                        "description": "\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "brow_R",
+                        "expanded": true,
+                        "description": "\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "facialTrichomes_GRP",
+                    "expanded": true,
+                    "description": "\u8138\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "facialTrichomes",
+                        "expanded": true,
+                        "description": "\u8138\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "beard_Grp",
+                    "expanded": true,
+                    "description": "\u80e1\u987b\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "beard",
+                        "expanded": true,
+                        "description": "\u80e1\u987b",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "FACE_GRP",
+                "expanded": true,
+                "description": "\u9762\u90e8\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "expressionTarget_GRP",
+                    "expanded": true,
+                    "description": "\u8868\u60c5\u76ee\u6807\u4f53\u7ec4",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SIM_GRP",
+            "expanded": true,
+            "description": "\u89e3\u7b97\u7ec4",
+            "condition": "True",
+            "subs": [
+              {
+                "name": "SimHair_GRP",
+                "expanded": true,
+                "description": "\u89e3\u7b97\u6bdb\u53d1\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "simHair",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u5934\u53d1",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "bangs_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u5218\u6d77",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "bangs_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u5218\u6d77",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "crown_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u9876\u51a0",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "crown_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u9876\u51a0",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "boneBeam_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u9aa8\u6881",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "boneBeam_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u9aa8\u6881",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "side_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u4fa7\u90e8",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "side_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4fa7\u90e8",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rearPillow_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u540e\u6795",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "rearPillow_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u540e\u6795",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "hindNeck_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u540e\u9888",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "hindNeck_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u540e\u9888",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "facialHari_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u8138\u6bdb",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "facialHari_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8138\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "brow_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u7709\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "brow_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Lashes_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u776b\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "upLashes_sim_GRP",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4e0a\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "upLashes_sim_L",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upLashes_sim_R",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "loLashes_sim_GRP",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4e0b\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "loLashes_sim_L",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "loLashes_sim_R",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "SimCloth_GRP",
+                "expanded": true,
+                "description": "\u89e3\u7b97\u5e03\u6599\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "UpperGarment_GRP",
+                    "expanded": true,
+                    "description": "\u4e0a\u8863\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "jacket_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4e0a\u8863",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "robe_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u957f\u888d",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "cape_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u62ab\u98ce",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "underwear_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u5185\u8863",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "pocket_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8863\u888b",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "LowerGarment_sim_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u4e0b\u88c5\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "trousers_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u957f\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shorts_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u77ed\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "longuette_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u957f\u88d9",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shortSkirt_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u77ed\u88d9",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "briefs_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u5185\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "zipper_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u62c9\u94fe",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "trouserPocket_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u88e4\u888b",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "BELT_sim_R_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u8170\u5e26",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "beltStrap_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8170\u5e26\u6761",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "beltBuckle_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8170\u5e26\u6263",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "beltRing_sim",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8170\u5e26\u73af",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Ornaments_GRP",
+                    "expanded": true,
+                    "description": "\u9970\u54c1\u7ec4",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "SHOES_GRP",
+                    "expanded": true,
+                    "description": "\u978b\u5b50\u7ec4",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "RIG_GRP",
+            "expanded": true,
+            "description": "\u7ed1\u5b9a\u63a7\u5236\u7ec4",
+            "condition": "True",
+            "subs": []
+          }
+        ]
+      },
+      {
+        "name": "{asset}_LOW_GRP",
+        "expanded": true,
+        "description": "\u6a21\u578b\u4f4e\u6a21\u7ec4",
+        "condition": "True",
+        "subs": [
+          {
+            "name": "GEO_Low_GRP",
+            "expanded": true,
+            "description": "\u8d44\u4ea7\u7684\u6a21\u578b\u51e0\u4f55\u5f62\u7269\u4f53\u7ec4",
+            "condition": "True",
+            "subs": [
+              {
+                "name": "BODY_Low_GRP",
+                "expanded": true,
+                "description": "\u8eab\u4f53\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "body_Low",
+                    "expanded": true,
+                    "description": "\u8eab\u4f53",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              },
+              {
+                "name": "OralCavity_Low_GRP",
+                "expanded": true,
+                "description": "\u53e3\u8154\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "teethUp_Low",
+                    "expanded": true,
+                    "description": "\u4e0a\u7259\u9f7f",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "teethLo_Low",
+                    "expanded": true,
+                    "description": "\u4e0b\u7259\u9f7f",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "tongue_Low",
+                    "expanded": true,
+                    "description": "\u820c\u5934",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              },
+              {
+                "name": "Eye_Low_GRP",
+                "expanded": true,
+                "description": "\u773c\u775b\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "eyeBall_Low_GRP",
+                    "expanded": true,
+                    "description": "\u773c\u7403\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "eyeBall_L_Low",
+                        "expanded": true,
+                        "description": "\u773c\u7403",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "eyeBall_R_Low",
+                        "expanded": true,
+                        "description": "\u773c\u7403",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Lashes_Low_GRP",
+                    "expanded": true,
+                    "description": "\u776b\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "upLashes_Low_GRP",
+                        "expanded": true,
+                        "description": "\u4e0a\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "upLashes_L_Low",
+                            "expanded": true,
+                            "description": "\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upLashes_R_Low",
+                            "expanded": true,
+                            "description": "\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "loLashes_Low_GRP",
+                        "expanded": true,
+                        "description": "\u4e0b\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "loLashes_L_Low",
+                            "expanded": true,
+                            "description": "\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "loLashes_R_Low",
+                            "expanded": true,
+                            "description": "\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "camea_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89d2\u819c\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "camea_L_Low",
+                        "expanded": true,
+                        "description": "\u89d2\u819c",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "camea_R_Low",
+                        "expanded": true,
+                        "description": "\u89d2\u819c",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "eyeHighLigth_Low_GRP",
+                    "expanded": true,
+                    "description": "\u9ad8\u5149\u70b9\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "eyeHighLigth_L_Low",
+                        "expanded": true,
+                        "description": "\u9ad8\u5149\u70b9",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "eyeHighLigth_R_Low",
+                        "expanded": true,
+                        "description": "\u9ad8\u5149\u70b9",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "GeoCloth_Low_GRP",
+                "expanded": true,
+                "description": "\u51e0\u4f55\u4f53\u5e03\u6599\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "upperGarment_Low_GRP",
+                    "expanded": true,
+                    "description": "\u4e0a\u88c5\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "jacket_Low",
+                        "expanded": true,
+                        "description": "\u4e0a\u8863",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "LowerGarment_Low_GRP",
+                    "expanded": true,
+                    "description": "\u4e0b\u88c5\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "trousers_Low",
+                        "expanded": true,
+                        "description": "\u88e4\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SHOES_Low_GRP",
+                    "expanded": true,
+                    "description": "\u978b\u5b50\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "shose_Low",
+                        "expanded": true,
+                        "description": "\u978b\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shose_L_Low",
+                        "expanded": true,
+                        "description": "\u978b\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shose_R_Low",
+                        "expanded": true,
+                        "description": "\u978b\u5b50",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "boots_Low_GRP",
+                        "expanded": true,
+                        "description": "\u9774\u5b50\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "boots_L_Low",
+                            "expanded": true,
+                            "description": "\u9774\u5b50",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "boots_R_Low",
+                            "expanded": true,
+                            "description": "\u9774\u5b50",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "shoeLace_Low_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u5e26\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "shoeLace_L_Low",
+                            "expanded": true,
+                            "description": "\u978b\u5e26",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeLace_R_Low",
+                            "expanded": true,
+                            "description": "\u978b\u5e26",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "upper_Low_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u5e2e\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "upper_L_Low",
+                            "expanded": true,
+                            "description": "\u978b\u5e2e",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upper_R_Low",
+                            "expanded": true,
+                            "description": "\u978b\u5e2e",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "sole_Low_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u5e95\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "sole_L_Low",
+                            "expanded": true,
+                            "description": "\u978b\u5e95",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "sole_R_Low",
+                            "expanded": true,
+                            "description": "\u978b\u5e95",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "shoeHeel_Low_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u8ddf\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "shoeHeel_L_Low",
+                            "expanded": true,
+                            "description": "\u978b\u8ddf",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeHeel_R_Low",
+                            "expanded": true,
+                            "description": "\u978b\u8ddf",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "shoeTongue_Low_GRP",
+                        "expanded": true,
+                        "description": "\u978b\u820c\u7ec4",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "shoeTongue_L_Low",
+                            "expanded": true,
+                            "description": "\u978b\u820c",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "shoeTongue_R_Low",
+                            "expanded": true,
+                            "description": "\u978b\u820c",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "FACE_Low_GRP",
+                "expanded": true,
+                "description": "\u9762\u90e8\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "expressionTarget_Low_GRP",
+                    "expanded": true,
+                    "description": "\u8868\u60c5\u76ee\u6807\u4f53\u4f4e\u6a21\u7ec4",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              },
+              {
+                "name": "GeoHair_Low_GRP",
+                "expanded": true,
+                "description": "\u51e0\u4f55\u4f53\u6bdb\u53d1\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "geoHair_Low",
+                    "expanded": true,
+                    "description": "\u51e0\u4f55\u4f53\u6bdb\u53d1",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "bangs_Low_GRP",
+                    "expanded": true,
+                    "description": "\u5218\u6d77\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "boneBeam_Low",
+                        "expanded": true,
+                        "description": "\u9aa8\u6881",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "crown_Low_GRP",
+                    "expanded": true,
+                    "description": "\u9876\u51a0\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "crown_Low",
+                        "expanded": true,
+                        "description": "\u9876\u51a0",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "boneBeam_Low_GRP",
+                    "expanded": true,
+                    "description": "\u9aa8\u6881\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "boneBeam_Low_GRP",
+                        "expanded": true,
+                        "description": "\u9aa8\u6881\u7ec4",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "side_Low_GRP",
+                    "expanded": true,
+                    "description": "\u4fa7\u90e8\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "side_Low",
+                        "expanded": true,
+                        "description": "\u4fa7\u90e8",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rearPillow_Low_GRP",
+                    "expanded": true,
+                    "description": "\u540e\u6795\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "rearPillow_Low",
+                        "expanded": true,
+                        "description": "\u540e\u6795",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "hindNeck_Low_GRP",
+                    "expanded": true,
+                    "description": "\u540e\u9888\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "hindNeck_Low",
+                        "expanded": true,
+                        "description": "\u540e\u9888",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "brow_Low_GRP",
+                    "expanded": true,
+                    "description": "\u7709\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "brow_Low",
+                        "expanded": true,
+                        "description": "\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "brow_L_Low",
+                        "expanded": true,
+                        "description": "\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "brow_R_Low",
+                        "expanded": true,
+                        "description": "\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "facialTrichomes_Low_GRP",
+                    "expanded": true,
+                    "description": "\u8138\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "facialTrichomes_Low",
+                        "expanded": true,
+                        "description": "\u8138\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SIM_Low_GRP",
+            "expanded": true,
+            "description": "\u89e3\u7b97\u7ec4",
+            "condition": "True",
+            "subs": [
+              {
+                "name": "SimHair_Low_GRP",
+                "expanded": true,
+                "description": "\u89e3\u7b97\u6bdb\u53d1\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "simHair_Low",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u6bdb\u53d1",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "bangs_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u5218\u6d77",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "bangs_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u5218\u6d77",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "crown_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u9876\u51a0",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "crown_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u9876\u51a0",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "boneBeam_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u9aa8\u6881",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "boneBeam_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u9aa8\u6881",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "side_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u4fa7\u90e8",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "side_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4fa7\u90e8",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rearPillow_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u540e\u6795",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "rearPillow_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u540e\u6795",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "hindNeck_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u540e\u9888",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "hindNeck_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u540e\u9888",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "facialHari_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u8138\u6bdb",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "facialHari_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8138\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "brow_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u7709\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "brow_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u7709\u6bdb",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Lashes_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u776b\u6bdb\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "upLashes_sim_Low_GRP",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4e0a\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "upLashes_sim_L_Low",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "upLashes_sim_R_Low",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0a\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "loLashes_sim_Low_GRP",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4e0b\u776b\u6bdb",
+                        "condition": "True",
+                        "subs": [
+                          {
+                            "name": "loLashes_sim_L_Low",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          },
+                          {
+                            "name": "loLashes_sim_R_Low",
+                            "expanded": true,
+                            "description": "\u89e3\u7b97\u4e0b\u776b\u6bdb",
+                            "condition": "True",
+                            "subs": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "SimCloth_Low_GRP",
+                "expanded": true,
+                "description": "\u89e3\u7b97\u5e03\u6599\u7ec4",
+                "condition": "True",
+                "subs": [
+                  {
+                    "name": "UpperGarment_Low_GRP",
+                    "expanded": true,
+                    "description": "\u4e0a\u8863\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "jacket_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u4e0a\u8863",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "robe_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u957f\u888d",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "cape_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u62ab\u98ce",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "underwear_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u5185\u8863",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "pocket_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8863\u888b",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "LowerGarment_sim_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u4e0b\u88c5\u7ec4",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "trousers_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u957f\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shorts_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u77ed\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "longuette_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u957f\u88d9",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "shortSkirt_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u77ed\u88d9",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "briefs_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u5185\u88e4",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "zipper_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u62c9\u94fe",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "trouserPocket_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u88e4\u888b",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "BELT_sim_R_Low_GRP",
+                    "expanded": true,
+                    "description": "\u89e3\u7b97\u8170\u5e26",
+                    "condition": "True",
+                    "subs": [
+                      {
+                        "name": "beltStrap_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8170\u5e26\u6761",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "beltBuckle_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8170\u5e26\u6263",
+                        "condition": "True",
+                        "subs": []
+                      },
+                      {
+                        "name": "beltRing_sim_Low",
+                        "expanded": true,
+                        "description": "\u89e3\u7b97\u8170\u5e26\u73af",
+                        "condition": "True",
+                        "subs": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Ornaments_Low_GRP",
+                    "expanded": true,
+                    "description": "\u9970\u54c1\u7ec4",
+                    "condition": "True",
+                    "subs": []
+                  },
+                  {
+                    "name": "SHOES_Low_GRP",
+                    "expanded": true,
+                    "description": "\u978b\u5b50\u7ec4",
+                    "condition": "True",
+                    "subs": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ctl",
+        "expanded": true,
+        "description": "\u63a7\u5236\u5668\u7ec4",
+        "condition": "True",
+        "subs": []
+      },
+      {
+        "name": "ske",
+        "expanded": true,
+        "description": "\u9aa8\u9abc\u7ec4",
+        "condition": "True",
+        "subs": []
+      }
+    ]
+  }
+]
